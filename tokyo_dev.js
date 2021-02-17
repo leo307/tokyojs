@@ -314,6 +314,15 @@ var features = {};
     var player_to_steal_name = 0;
     var last_whitelist_name = "Select Player";
 
+    features.reset_whitelist = function (idx) {
+        if (!idx || idx > 64)
+            return;
+
+        plist_values.plist_values.esp_disabled[idx] = 0;
+        plist_values.plist_values.ragebot_disabled[idx] = 0;
+        plist_values.plist_values.headshot_enabled[idx] = 0;
+    }
+
     features.run_whitelist = function () {
         //var ui_steal_clantag = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Clantag Stealer"]);
 
@@ -559,15 +568,65 @@ var callbacks = {};
 
     }
 
+    callbacks.player_connect_full = function () {
+        var user_id = Event.GetInt("userid");
+
+        if (!user_id)
+            return;
+
+        var idx = Entity.GetEntityFromUserID(user_id);
+
+        if (!idx || idx > 64)
+            return;
+
+        // if it's us, clear ALL entities
+        if (idx == Entity.GetLocalPlayer()) {
+            for (var i = 1; i <= 64; i++)
+                features.reset_whitelist(i);
+        }
+        else {
+            // clear player list for that entity
+            features.reset_whitelist(idx);
+        }
+    }
+
+    callbacks.cs_game_disconnected = function () {
+        var user_id = Event.GetInt("userid");
+
+        if (!user_id)
+            return;
+
+        var idx = Entity.GetEntityFromUserID(user_id);
+
+        if (!idx || idx > 64)
+            return;
+
+        // if it's us, clear ALL entities
+        if (idx == Entity.GetLocalPlayer()) {
+            for (var i = 1; i <= 64; i++)
+                features.reset_whitelist(i);
+        }
+        else {
+            // clear player list for that entity
+            features.reset_whitelist(idx);
+        }
+    }
+
     callbacks.unload = function () {
         AntiAim.SetOverride(0);
     }
 }
 
 /* register_cb */ {
-    Cheat.RegisterCallback("ragebot_fire", "callbacks.ragebot_fire");
-    Cheat.RegisterCallback("player_hurt", "callbacks.player_hurt");
+    // hook callbacks
     Cheat.RegisterCallback("Unload", "callbacks.unload");
     Cheat.RegisterCallback("Draw", "callbacks.draw");
     Cheat.RegisterCallback("CreateMove", "callbacks.create_move");
+
+    // game events
+    Cheat.RegisterCallback("ragebot_fire", "callbacks.ragebot_fire");
+    Cheat.RegisterCallback("player_hurt", "callbacks.player_hurt");
+    // for player list
+    Cheat.RegisterCallback("player_connect_full", "callbacks.player_connect_full");
+    Cheat.RegisterCallback("cs_game_disconnected", "callbacks.cs_game_disconnected");
 }
