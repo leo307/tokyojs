@@ -67,6 +67,36 @@
 // fonts
 var fonts = [];
 
+/* render */ {
+    Render.StringShadow = function (x, y, centered, text, color, font) {
+        Render.String(x + 1, y + 1, centered, text, [0, 0, 0, color[3]], font);
+        Render.String(x, y, centered, text, color, font);
+    }
+
+    // from my gui framework
+    // https://github.com/amizu03/sesui/blob/master/src/sesui/sesui.hpp#L494
+    Render.RoundedRect = function (x, y, w, h, r, clr) {
+        var dpi_scale = this.get_dpi_scale();
+        var scaled_resolution = Math.round(r * dpi_scale * 0.666);
+
+        var verticies = new Array(4 * scaled_resolution);
+
+        for (var i = 0; i < 4; i++) {
+            var x = rectangle.x + ((i < 2) ? (w - r) : r);
+            var y = rectangle.y + ((i % 3) ? (h - r) : r);
+            var a = 90.0 * i;
+
+            for (var j = 0; j < scaled_resolution; j++) {
+                var a1 = (a + (j / (scaled_resolution - 1)) * 90.0) * Math.PI / 180.0;
+
+                verticies[i * scaled_resolution + j] = [x + r * Math.sin(a1), y - r * Math.cos(a1)];
+            }
+        }
+
+        Render.Polygon(verticies, clr);
+    }
+}
+
 var utils = {};
 
 /* utils */ {
@@ -96,11 +126,6 @@ var utils = {};
         return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), 255];
     }
 
-    utils.string_shadow = function (x, y, centered, text, color, font) {
-        Render.String(x + 1, y + 1, centered, text, [0, 0, 0, color[3]], font);
-        Render.String(x, y, centered, text, color, font);
-    }
-
     utils.set_all = function (a, v) {
         var i, n = a.length;
 
@@ -120,7 +145,7 @@ var utils = {};
 
     utils.add_indicator = function (str, clr, font) {
         var text_size = Render.TextSize(text, font);
-        utils.string_shadow(Render.GetScreenSize()[0] / 2 - text_size[0] / 2, current_indicators_y, 0, str, clr, font);
+        Render.StringShadow(Render.GetScreenSize()[0] / 2 - text_size[0] / 2, current_indicators_y, 0, str, clr, font);
         current_indicators_y += text_size[1] + 2 * this.get_dpi_scale();
     }
 }
@@ -217,7 +242,7 @@ var features = {};
         Render.GradientRect(0, 0, 300 * dpi_scale, 25 * dpi_scale, 1 /* horizontal gradient */, clr, [0, 0, 0, 0]);
         Render.FilledRect(0, 0, 300 * dpi_scale, 2 * dpi_scale, clr);
 
-        utils.string_shadow(5, 4, 0, "Tokyo [Dev] | " + Cheat.GetUsername() + " | " + World.GetMapName() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
+        Render.StringShadow(5, 4, 0, "Tokyo [Dev] | " + Cheat.GetUsername() + " | " + World.GetMapName() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
     }
 
     features.run_slowwalk = function () {
