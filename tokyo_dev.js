@@ -70,7 +70,7 @@ var fonts = [];
 var utils = {};
 
 /* utils */ {
-    utils.get_dropdown_value = function(value, index) {
+    utils.get_dropdown_value = function (value, index) {
         var mask = 1 << index;
         return value & mask ? true : false;
     }
@@ -107,6 +107,22 @@ var utils = {};
         for (i = 0; i < n; ++i)
             a[i] = v;
     }
+
+    utils.get_dpi_scale = function () {
+        return Render.GetScreenSize()[1] / 1080 /* everything scaled by base size on a 1080p monitors */;
+    }
+
+    var current_indicators_y = 0;
+
+    utils.reset_indicators = function () {
+        current_indicators_y = Render.GetScreenSize()[1] / 2 + 26 * this.get_dpi_scale();
+    }
+
+    utils.add_indicator = function (str, clr, font) {
+        var text_size = Render.TextSize(text, font);
+        utils.string_shadow(Render.GetScreenSize()[0] / 2 - text_size[0] / 2, current_indicators_y, 0, str, clr, font);
+        current_indicators_y += text_size[1] + 2 * this.get_dpi_scale();
+    }
 }
 
 var features = {};
@@ -130,28 +146,28 @@ var features = {};
         var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
 
-        if(utils.get_dropdown_value(rgb_esp, 0))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-        
-        if(utils.get_dropdown_value(rgb_esp, 1))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-        
-        if(utils.get_dropdown_value(rgb_esp, 2))
-            UI.SetColor(["Visuals", "World", "General", "Ambient light",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-        
-        if(utils.get_dropdown_value(rgb_esp, 3))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-        
-        if(utils.get_dropdown_value(rgb_esp, 4))
-            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+        if (utils.get_dropdown_value(rgb_esp, 0))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+
+        if (utils.get_dropdown_value(rgb_esp, 1))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+
+        if (utils.get_dropdown_value(rgb_esp, 2))
+            UI.SetColor(["Visuals", "World", "General", "Ambient light",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+
+        if (utils.get_dropdown_value(rgb_esp, 3))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+
+        if (utils.get_dropdown_value(rgb_esp, 4))
+            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
     }
 
     features.run_clantag = function () {
         var wanted_tag = "";
         if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Heartbeat Clantag"]))
-        wanted_tag = !(Math.floor(Globals.Curtime() * 3) % 3) ? "❤" : "♡";
+            wanted_tag = !(Math.floor(Globals.Curtime() * 3) % 3) ? "❤" : "♡";
         else if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Clantag"])) {
-                wanted_tag = tag_list[Math.floor(Globals.Curtime() * UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Clantag Speed"])) % tag_list.length];
+            wanted_tag = tag_list[Math.floor(Globals.Curtime() * UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Clantag Speed"])) % tag_list.length];
         }
 
         // only update clantag when we need to, preventing lag issue with fast clantag changes
@@ -169,20 +185,22 @@ var features = {};
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
         var text_clr = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Indicators"]) ? [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], indicator_clr[3]] : indicator_clr;
 
-        if (UI.GetValue(['Rage', 'Exploits', 'Keys', 'Key assignment', 'Double tap']))
-            utils.string_shadow(952, 550, 0, "DT", text_clr, fonts[1]);
+        utils.reset_indicators();
 
-        if (UI.GetValue(['Rage', 'Exploits', 'Keys', 'Key assignment', 'Hide shots']))
-            utils.string_shadow(952, 565, 0, "HS", text_clr, fonts[1]);
+        if (UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Double tap"]))
+            utils.add_indicator("DT", text_clr, fonts[1]);
+
+        if (UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Hide shots"]))
+            utils.add_indicator("HS", text_clr, fonts[1]);
 
         if (UI.GetValue(["Rage", "Anti Aim", "Key assignment", "Fake duck"]))
-            utils.string_shadow(952, 580, 0, "FD", text_clr, fonts[1]);
+            utils.add_indicator("FD", text_clr, fonts[1]);
 
         if (UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter"))
-            utils.string_shadow(937, 595, 0, "Inverter", text_clr, fonts[1]);
+            utils.add_indicator("Inverter", text_clr, fonts[1]);
 
         if (UI.GetValue(["Misc.", "Keys", "Key assignment", "Tokyo Minimum Damage on Key"]))
-            utils.string_shadow(910, 610, 0, "Min DMG Override", text_clr, fonts[1]);
+            utils.add_indicator("Min DMG Override", text_clr, fonts[1]);
     }
 
     features.run_watermark = function () {
@@ -194,8 +212,10 @@ var features = {};
         if (!UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Watermark"]))
             return;
 
-        Render.GradientRect(0, 0, 300, 25, 1 /* horizontal gradient */, clr, [0, 0, 0, 0]);
-        Render.FilledRect(0, 0, 300, 2, clr);
+        var dpi_scale = utils.get_dpi_scale();
+
+        Render.GradientRect(0, 0, 300 * dpi_scale, 25 * dpi_scale, 1 /* horizontal gradient */, clr, [0, 0, 0, 0]);
+        Render.FilledRect(0, 0, 300 * dpi_scale, 2 * dpi_scale, clr);
 
         utils.string_shadow(5, 4, 0, "Tokyo [Dev] | " + Cheat.GetUsername() + " | " + World.GetMapName() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
     }
@@ -209,12 +229,12 @@ var features = {};
             return;
 
         var weapon_info = Entity.GetCCSWeaponInfo(local);
-        var target_speed = weapon_info["max_speed"] * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) *0.34;
-        
+        var target_speed = weapon_info["max_speed"] * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) * 0.34;
+
         AntiAim.SetOverride(1);
         AntiAim.SetRealOffset(enable_invert ? 19 : -19);
         AntiAim.SetFakeOffset(enable_invert ? -2 : 2);
-        
+
         dir = [0, 0, 0];
 
         if (buttons & (1 << 10))
@@ -447,19 +467,19 @@ var features = {};
 
     features.run_doubletap = function () {
         var dt_shift = UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Custom Doubletap Shift"]);
-        switch (UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Doubletap Speed"])){
-            case 0: /*Off*/{
+        switch (UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Doubletap Speed"])) {
+            case 0: /*Off*/ {
                 Exploit.OverrideTolerance(2);
                 Exploit.OverrideShift(12);
-            }break;
-            case 1:{ /*Instant*/
+            } break;
+            case 1: /*Instant*/ {
                 Exploit.OverrideShift(16);
                 Exploit.OverrideTolerance(0);
-            }break;
-            case 2:{ /*Custom*/
+            } break;
+            case 2: /*Custom*/ {
                 Exploit.OverrideShift(dt_shift);
                 Exploit.OverrideTolerance(0);
-            }break;
+            } break;
         }
     }
 }
@@ -470,9 +490,9 @@ var callbacks = {};
     callbacks.draw = function () {
         // initializing fonts
         if (!fonts.length) {
-            fonts.push(Render.GetFont("segoeuib.ttf", 11, true));
-            fonts.push(Render.GetFont("segoeuib.ttf", 13, true));
-            fonts.push(Render.GetFont("segoeuil.ttf", 8, true));
+            fonts.push(Render.GetFont("segoeuib.ttf", 11 * dpi_scale, true));
+            fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true));
+            fonts.push(Render.GetFont("segoeuil.ttf", 8 * dpi_scale, true));
         }
 
         features.run_visuals();
