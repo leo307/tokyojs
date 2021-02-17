@@ -23,7 +23,7 @@
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Heartbeat Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "FPS Booster");
     // Visuals
-    UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"])
+    UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"]);
     // Rage
     UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Custom"], 0)
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Custom Doubletap Shift", 0, 16);
@@ -43,10 +43,10 @@
     UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 0);
     // Whitelist
     UI.AddDropdown(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Name Selection", ["Select Player"], 0);
-    UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Clantag Stealer");
+    //UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Clantag Stealer");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable Ragebot");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable ESP");
-    UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Onshot Only");
+    UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Headshot Only");
 
     // Initialize Console and Chat Output
     var logo_clr = [142, 68, 173, 255];
@@ -70,6 +70,11 @@ var fonts = [];
 var utils = {};
 
 /* utils */ {
+    utils.get_dropdown_value = function(value, index) {
+        var mask = 1 << index;
+        return value & mask ? true : false;
+    }
+
     utils.hsv_to_rgb = function (h, s, v) {
         var r, g, b, i, f, p, q, t;
 
@@ -124,24 +129,21 @@ var features = {};
         /*Cheat.Print( UI.GetChildren( ["Visuals", "Extra", "SHEET_MGR"] ) + '\n')*/
         var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-        //var esp_dormant = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Dormant"]);
-        //var esp_box = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Box (Enemy Only)"]);
-        //var esp_skeleton= UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Skeleton (Enemy Only)"]);
-        //var esp_glow = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Glow (Enemy Only)"]);
-        //var world_ambient = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB World Lighting"]);
-        //UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"])
-        switch(rgb_esp){
-           
-                UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-          
-                UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            
-                UI.SetColor(["Visuals", "World", "General", "Ambient light",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-           
-                UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-           
-                UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-          
+
+        if(utils.get_dropdown_value(rgb_esp, 0))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+        
+        if(utils.get_dropdown_value(rgb_esp, 1))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+        
+        if(utils.get_dropdown_value(rgb_esp, 2))
+            UI.SetColor(["Visuals", "World", "General", "Ambient light",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+        
+        if(utils.get_dropdown_value(rgb_esp, 3))
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+        
+        if(utils.get_dropdown_value(rgb_esp, 4))
+            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
     }
 
     features.run_clantag = function () {
@@ -237,14 +239,14 @@ var features = {};
         ragebot_disabled: new Array(65),
         last_esp_disabled: 0,
         esp_disabled: new Array(65),
-        last_onshot_enabled: 0,
-        onshot_enabled: new Array(65),
+        last_headshot_enabled: 0,
+        headshot_enabled: new Array(65),
     };
 
     // initialize list 
     utils.set_all(plist_values.ragebot_disabled, 0);
     utils.set_all(plist_values.esp_disabled, 0);
-    utils.set_all(plist_values.onshot_enabled, 0);
+    utils.set_all(plist_values.headshot_enabled, 0);
 
     // for later 
     var player_to_steal_tag = 0;
@@ -252,7 +254,7 @@ var features = {};
     var last_whitelist_name = "Select Player";
 
     features.run_whitelist = function () {
-        var ui_steal_clantag = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Clantag Stealer"]);
+        //var ui_steal_clantag = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Clantag Stealer"]);
 
         // update list of enemies on the menu
         var whitelistPlayers = Entity.GetPlayers();
@@ -276,28 +278,45 @@ var features = {};
 
         var ui_current_name = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Name Selection"]);
 
+        // if enemy doesn't exist anymore, don't try to access an invalid index
+        if (ui_current_name >= enemy_indexes.length) {
+            var new_idx = enemy_indexes.length ? (enemy_indexes.length - 1) : 0;
+            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Name Selection"], new_idx);
+            ui_current_name = new_idx;
+        }
+
+        // only run player list if there are enemies in the server
+        if (!enemy_names.length) {
+            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Disable Ragebot"], 0);
+            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Disable ESP"], 0);
+            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Headshot Only"], 0);
+            plist_values.last_ragebot_disabled = 0;
+            plist_values.last_esp_disabled = 0;
+            plist_values.last_headshot_enabled = 0;
+            return;
+        }
+
         // check if player name changed (if so, reset the checkboxes to their values)
         if (last_whitelist_name != enemy_names[ui_current_name]) {
             var selected_enemy_index = enemy_indexes[ui_current_name];
 
             UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Disable Ragebot"], plist_values.ragebot_disabled[selected_enemy_index]);
             UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Disable ESP"], plist_values.esp_disabled[selected_enemy_index]);
-            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Onshot Only"], plist_values.onshot_enabled[selected_enemy_index]);
+            UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Headshot Only"], plist_values.headshot_enabled[selected_enemy_index]);
 
             plist_values.last_ragebot_disabled = plist_values.ragebot_disabled[selected_enemy_index];
             plist_values.last_esp_disabled = plist_values.esp_disabled[selected_enemy_index];
-            plist_values.last_onshot_enabled = plist_values.onshot_enabled[selected_enemy_index];
+            plist_values.last_headshot_enabled = plist_values.headshot_enabled[selected_enemy_index];
 
             last_whitelist_name = enemy_names[ui_current_name];
         }
 
         var current_player_idx = enemy_indexes[ui_current_name];
 
-        // if we change the value of esp, ragebot, or onshot override, save it in our array as well! 
+        // if we change the value of esp, ragebot, or headshot override, save it in our array as well! 
         var ui_disable_ragebot = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Disable Ragebot"]);
         if (plist_values.last_ragebot_disabled != ui_disable_ragebot) {
             plist_values.ragebot_disabled[current_player_idx] = ui_disable_ragebot;
-            Cheat.PrintChat("Value of disable ragebot changed!\n");
             plist_values.last_ragebot_disabled = ui_disable_ragebot;
         }
 
@@ -307,10 +326,27 @@ var features = {};
             plist_values.last_esp_disabled = ui_disable_esp;
         }
 
-        var ui_onshot_only = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Onshot Only"]);
-        if (plist_values.last_onshot_enabled != ui_onshot_only) {
-            plist_values.onshot_enabled[current_player_idx] = ui_onshot_only;
-            plist_values.last_onshot_enabled = ui_onshot_only;
+        var ui_headshot_only = UI.GetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Headshot Only"]);
+        if (plist_values.last_headshot_enabled != ui_headshot_only) {
+            plist_values.headshot_enabled[current_player_idx] = ui_headshot_only;
+            plist_values.last_headshot_enabled = ui_headshot_only;
+        }
+
+        // actually run the features on each player!
+        for (var i = 0; i <= 64; i++) {
+            if (plist_values.ragebot_disabled[i])
+                Ragebot.IgnoreTarget(i);
+
+            if (plist_values.esp_disabled[i])
+                Entity.DisableESP(i);
+
+            if (plist_values.headshot_enabled[i]) {
+                // ignore every hitbox but head (0 is head)
+                // !!MUST HAVE HEAD ENABLED!!
+                // ghetto fix for now, until someone has a better answer/knows better
+                for (var j = 1; j <= 12; j++)
+                    Ragebot.IgnoreTargetHitbox(i, j);
+            }
         }
     }
 
