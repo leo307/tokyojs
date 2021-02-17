@@ -100,6 +100,10 @@ var fonts = [];
 var utils = {};
 
 /* utils */ {
+    utils.clamp = function (x, min, max) {
+        return Math.min(Math.max(x, min), max);
+    }
+
     utils.get_dropdown_value = function (value, index) {
         var mask = 1 << index;
         return value & mask ? true : false;
@@ -274,17 +278,19 @@ var features = {};
         // normalize movement vector
         var new_movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
 
-        movement[0] /= new_movement_scale;
-        movement[1] /= new_movement_scale;
-
         // clamp and scale speed between maximum
-        movement[0] *= Convar.GetFloat("cl_forwardspeed");
-        movement[1] *= Convar.GetFloat("cl_sidespeed");
+        var forward_speed = Convar.GetFloat("cl_forwardspeed");
+        var side_speed = Convar.GetFloat("cl_sidespeed");
+
+        movement[0] = utils.clamp((movement[0] / new_movement_scale) * forward_speed, forward_speed);
+        // using forward movement again is on purpose just to prevent us from having improperly scaled speed
+        // both components must be scaled evenly
+        movement[1] = utils.clamp((movement[1] / new_movement_scale) * forward_speed, side_speed);
 
         UserCMD.SetMovement(movement);
 
         // remove walk flag
-        UserCMD.SetButtons(buttons | (1 << 18 /* walk flag */));
+        UserCMD.SetButtons(buttons | (1 << 18 /* IN_WALK */));
     }
 
     // Whitelist Function
