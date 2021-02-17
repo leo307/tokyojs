@@ -246,7 +246,7 @@ var features = {};
     }
 
     features.run_slowwalk = function () {
-        var buttons = UserCMD.GetButtons();
+        var movement = UserCMD.GetMovement();
         var local = Entity.GetLocalPlayer();
         var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
 
@@ -254,27 +254,37 @@ var features = {};
             return;
 
         var weapon_info = Entity.GetCCSWeaponInfo(local);
-        var target_speed = weapon_info["max_speed"] * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) * 0.34;
+        var scoped = Entity.GetProp(local, "CCSPlayer", "m_bIsScoped");
+        var target_speed = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) * 0.34;
 
         AntiAim.SetOverride(1);
         AntiAim.SetRealOffset(enable_invert ? 19 : -19);
         AntiAim.SetFakeOffset(enable_invert ? -2 : 2);
 
-        dir = [0, 0, 0];
+        var movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
 
-        if (buttons & (1 << 10))
-            dir[1] += target_speed;
+        if (movement_scale <= 1.1)
+            return;
 
-        if (buttons & (1 << 9))
-            dir[1] -= target_speed;
+        // scale our movements by the target velocity
+        movement[0] = (movement[0] / movement_scale) * target_speed;
+        movement[1] = (movement[1] / movement_scale) * target_speed;
 
-        if (buttons & (1 << 4))
-            dir[0] -= target_speed;
+        // so we don't speed up when going diagonally (magnitude will be greater with both x and y components; pythagorean theorem)
+        // normalize movement vector
+        var new_movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
 
-        if (buttons & (1 << 3))
-            dir[0] += target_speed;
+        movement[0] /= new_movement_scale;
+        movement[1] /= new_movement_scale;
 
-        UserCMD.SetMovement(dir);
+        // clamp and scale speed between maximum
+        movement[0] *= Convar.GetFloat("cl_forwardspeed");
+        movement[1] *= Convar.GetFloat("cl_sidespeed");
+
+        UserCMD.SetMovement(movement);
+
+        // remove walk flag
+        UserCMD.SetButtons(buttons | (1 << 18 /* walk flag */));
     }
 
     // Whitelist Function
