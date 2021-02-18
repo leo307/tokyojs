@@ -1,6 +1,6 @@
 /*
 *   "Tokyo" script for onetap.com
-*   Authors: TheTokyo#001, Grandpa#7617, ses#1997  
+*   Authors: TheTokyo#001, ses#1997  
 */
 
 /* script_init */ {
