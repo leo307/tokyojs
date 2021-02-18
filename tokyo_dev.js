@@ -170,27 +170,52 @@ var features = {};
         "T齉", "T龒", "T", "T",
         "", "", "", ""
     ];
+    var skel_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Skeleton"]);
+    var box_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Box"]);
+    var world_col = UI.GetColor(["Visuals", "World", "General", "Ambient light"]);
+    var glow_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Glow"]);
+    var dor_col = UI.GetColor(["Visuals", "Extra", "Extra", "Dormant ESP"]);
+    var temp_number = 1;
     features.run_visuals = function () {
         /*Cheat.Print( UI.GetChildren( ["Visuals", "Extra", "SHEET_MGR"] ) + '\n')*/
         var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-
-        if (utils.get_dropdown_value(rgb_esp, 0))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-
-        if (utils.get_dropdown_value(rgb_esp, 1))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-
-        if (utils.get_dropdown_value(rgb_esp, 2))
-            UI.SetColor(["Visuals", "World", "General", "Ambient light",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-
-        if (utils.get_dropdown_value(rgb_esp, 3))
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-
-        if (utils.get_dropdown_value(rgb_esp, 4))
-            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",], [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-    }
-
+        if(utils.get_dropdown_value(rgb_esp, 0)){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+            temp_number = 1;
+        } else if(temp_number){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",], box_col);
+            temp_number = 0;
+        }
+        if(utils.get_dropdown_value(rgb_esp, 1)){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+            temp_number = 1;
+        } else if(temp_number){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",], skel_col);
+            temp_number = 0;
+        }
+        if(utils.get_dropdown_value(rgb_esp, 2)){
+            UI.SetColor(["Visuals", "World", "General", "Ambient light",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+            temp_number = 1;
+        } else if(temp_number){
+            UI.SetColor(["Visuals", "World", "General", "Ambient light",], world_col);
+            temp_number = 0;
+        }
+        if(utils.get_dropdown_value(rgb_esp, 3)){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+            temp_number = 1;
+        } else if(temp_number){
+            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",], glow_col);
+            temp_number = 0;
+        }
+        if(utils.get_dropdown_value(rgb_esp, 4)){
+            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
+            temp_number = 1;
+        } else if(temp_number){
+            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",], dor_col);
+            temp_number = 0;
+        }
+}
     features.run_clantag = function () {
         var wanted_tag = "";
         if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Heartbeat Clantag"]))
@@ -438,32 +463,43 @@ var features = {};
 
     var old_breaker_tick_count = 0;
 
+    
     features.run_antiaim = function () {
-        var breakerEnabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Leg Breaker"]);
-        var breakerDelay = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"]);
-        var presetEnabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Preset Mode"]);
-        var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
-        var aaMode = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Preset Mode"]);
         var aa_enabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Tokyo AA"]);
-        var slow_walk = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]);
+        var presets = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"]);
+        var fake_slider =UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Custom Fake"]);
+        var real_slider = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Custom Real"]);
+        var breakerEnabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Leg Breaker"]);
+        var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
+        var breakerDelay = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"])
         var localPlayer = Entity.GetLocalPlayer();
-
-        if (aa_enabled && !presetEnabled) {
+        UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 1);
+        if(aa_enabled){
             AntiAim.SetOverride(1);
-
-            var fake_amount = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Fake"]);
-            var real_amount = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Real"]);
-
-            if (aaMode === 0 && aa_enabled) {
-                AntiAim.SetRealOffset(enable_invert ? -real_amount : real_amount);
-                AntiAim.SetFakeOffset(enable_invert ? -fake_amount : fake_amount);
+            if (presets) {
+                switch (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"])) {
+                    case 0: /* Classic */ {
+                        AntiAim.SetFakeOffset(enable_invert ? -15 : 28);
+                        AntiAim.SetRealOffset(enable_invert ? -38 : 23);
+                    } break;
+                    case 1: /* Classic Alternate */ {
+                        AntiAim.SetFakeOffset(enable_invert ? 34 : -32);
+                        AntiAim.SetRealOffset(enable_invert ? -39 : 39);
+                    } break;
+                    case 2: /* Low Delta */ {
+                        AntiAim.SetRealOffset(enable_invert ? 19 : -19);
+                        AntiAim.SetFakeOffset(enable_invert ? -2 : 2);
+                    } break;
+                    case 3: /* Tokyo */ {
+                        AntiAim.SetFakeOffset(enable_invert ? 22 : -22);
+                        AntiAim.SetRealOffset(enable_invert ? -35 : 35);
+                    } break;
+                    case 4: /* Custom */ {
+                        AntiAim.SetFakeOffset(enable_invert ? fake_slider : -fake_slider);
+                        AntiAim.SetRealOffset(enable_invert ? real_slider : -real_slider);
+                    }
+                }
             }
-        } else if (!aa_enabled) {
-            AntiAim.SetOverride(0);
-        }
-
-        if (Globals.Tickcount() + 20 < old_breaker_tick_count) {
-            old_breaker_tick_count = Globals.Tickcount();
         }
         if (breakerEnabled && Entity.IsAlive(localPlayer)) {
             if (Globals.Tickcount() - old_breaker_tick_count > breakerDelay) {
@@ -477,44 +513,12 @@ var features = {};
                 old_breaker_tick_count = Globals.Tickcount();
             }
         }
-
-        if (breakerEnabled) {
-            UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 1);
-        } else if (!breakerEnabled) {
-            UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 0);
-            UI.SetValue(["Misc.", "Movement", "Leg movement"], 2);
-            UI.SetValue(["Rage", "Anti Aim", "Jitter move"], 0);
+        if (Globals.Tickcount() + 20 < old_breaker_tick_count) {
+            old_breaker_tick_count = Globals.Tickcount();
         }
+        lastBreaker = breakerEnabled
 
-        // Setting Dropdown Visible
-        UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"], presetEnabled);
-
-        if (presetEnabled) {
-            UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Fake"], 0);
-            UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Real"], 0);
-        }
-
-        if (presetEnabled) {
-            switch (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"])) {
-                case 0: /* memespin */ {
-                    var min = -30;
-                    var max = 45;
-
-                    AntiAim.SetRealOffset(Math.random() * (max - min) + min);
-                    AntiAim.SetFakeOffset(Math.random() * (max - min) + min);
-                } break;
-                case 1: /* notch */ {
-                    AntiAim.SetFakeOffset(enable_invert ? -15 : 28);
-                    AntiAim.SetRealOffset(enable_invert ? -38 : 23);
-                } break;
-                case 2: /* notch alternate */ {
-                    AntiAim.SetFakeOffset(enable_invert ? 34 : -32);
-                    AntiAim.SetRealOffset(enable_invert ? -39 : 39);
-                } break;
-            }
-        }
     }
-
     features.run_doubletap = function () {
         var dt_shift = UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Custom Doubletap Shift"]);
         switch (UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Doubletap Speed"])) {
