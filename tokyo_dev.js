@@ -33,14 +33,11 @@
     // Anti-Aim
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Slow walk", 1, 100);
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Tokyo AA");
-    UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Preset Mode");
-    UI.AddDropdown(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Presets", ["Meme Spin", "Notch", "Notch Alternate"], 0);
-    UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"], 0);
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Fake", -60, 60);
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Real", -60, 60);
+    UI.AddDropdown(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Presets", ["Classic", "Classic Alternate", "Low Delta", "Tokyo", "Custom"], 0);
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Fake", -60, 60);
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Real", -60, 60);
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Leg Breaker");
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Breaker Delay", 1, 20);
-    UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 0);
     // Whitelist
     UI.AddDropdown(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Name Selection", ["Select Player"], 0);
     //UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Clantag Stealer");
@@ -76,14 +73,14 @@ var fonts = [];
     // from my gui framework
     // https://github.com/amizu03/sesui/blob/master/src/sesui/sesui.hpp#L494
     Render.RoundedRect = function (x, y, w, h, r, clr) {
-        var dpi_scale = this.get_dpi_scale();
+        var dpi_scale = utils.get_dpi_scale();
         var scaled_resolution = Math.round(r * dpi_scale * 0.666);
 
         var verticies = new Array(4 * scaled_resolution);
 
         for (var i = 0; i < 4; i++) {
-            var x = rectangle.x + ((i < 2) ? (w - r) : r);
-            var y = rectangle.y + ((i % 3) ? (h - r) : r);
+            var x = x + ((i < 2) ? (w - r) : r);
+            var y = y + ((i % 3) ? (h - r) : r);
             var a = 90.0 * i;
 
             for (var j = 0; j < scaled_resolution; j++) {
@@ -148,7 +145,7 @@ var utils = {};
     }
 
     utils.add_indicator = function (str, clr, font) {
-        var text_size = Render.TextSize(text, font);
+        var text_size = Render.TextSize(str, font);
         Render.StringShadow(Render.GetScreenSize()[0] / 2 - text_size[0] / 2, current_indicators_y, 0, str, clr, font);
         current_indicators_y += text_size[1] + 2 * this.get_dpi_scale();
     }
@@ -270,6 +267,8 @@ var features = {};
 
         Render.GradientRect(0, 0, 300 * dpi_scale, 25 * dpi_scale, 1 /* horizontal gradient */, clr, [0, 0, 0, 0]);
         Render.FilledRect(0, 0, 300 * dpi_scale, 2 * dpi_scale, clr);
+        
+        //Render.RoundedRect(0, 20, 200, 100, 5, [255, 255, 255, 255]);
 
         Render.StringShadow(5, 4, 0, "Tokyo [Dev] | " + Cheat.GetUsername() + " | " + World.GetMapName() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
     }
@@ -473,7 +472,6 @@ var features = {};
         var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
         var breakerDelay = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"])
         var localPlayer = Entity.GetLocalPlayer();
-        UI.SetEnabled(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"], 1);
         if(aa_enabled){
             AntiAim.SetOverride(1);
             if (presets) {
@@ -543,6 +541,7 @@ var callbacks = {};
 /* callbacks */ {
     callbacks.draw = function () {
         // initializing fonts
+        var dpi_scale = utils.get_dpi_scale();
         if (!fonts.length) {
             fonts.push(Render.GetFont("segoeuib.ttf", 11 * dpi_scale, true));
             fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true));
