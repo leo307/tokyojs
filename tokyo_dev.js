@@ -27,7 +27,6 @@
     // Rage
     UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Custom"], 0)
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Custom Doubletap Shift", 0, 16);
-    UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Accuracy", 0, 100);
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Minimum Damage on Key (Found in Misc. Keys)", 0, 100);
     UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "Tokyo Minimum Damage on Key", "Tokyo Min DMG");
     // Anti-Aim
@@ -298,24 +297,12 @@ var features = {};
         movement[0] = (movement[0] / movement_scale) * target_speed;
         movement[1] = (movement[1] / movement_scale) * target_speed;
 
-        // so we don't speed up when going diagonally (magnitude will be greater with both x and y components; pythagorean theorem)
-        // normalize movement vector
-        var new_movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
-
-        // clamp and scale speed between maximum
-        var forward_speed = Convar.GetFloat("cl_forwardspeed");
-        var side_speed = Convar.GetFloat("cl_sidespeed");
-
-        movement[0] = utils.clamp((movement[0] / new_movement_scale) * forward_speed, forward_speed);
-        // using forward movement again is on purpose just to prevent us from having improperly scaled speed
-        // both components must be scaled evenly
-        movement[1] = utils.clamp((movement[1] / new_movement_scale) * forward_speed, side_speed);
-
         UserCMD.SetMovement(movement);
 
         // remove walk flag
-        UserCMD.SetButtons(buttons | (1 << 18 /* IN_WALK */));
+        UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18 /* IN_WALK */));
     }
+
 
     // Whitelist Function
     // sesame 
