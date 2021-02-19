@@ -23,6 +23,7 @@
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Heartbeat Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "FPS Booster");
     // Visuals
+    UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Tokyo Visuals");
     UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"]);
     // Rage
     UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Custom"], 0)
@@ -175,7 +176,9 @@ var features = {};
     features.run_visuals = function () {
         /*Cheat.Print( UI.GetChildren( ["Visuals", "Extra", "SHEET_MGR"] ) + '\n')*/
         var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
+        var rgb_esp_button = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Tokyo Visuals"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+        if(rgb_esp_button){
         if(utils.get_dropdown_value(rgb_esp, 0)){
             UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
             temp_number = 1;
@@ -211,6 +214,7 @@ var features = {};
             UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",], dor_col);
             temp_number = 0;
         }
+    }
 }
     features.run_clantag = function () {
         var wanted_tag = "";
