@@ -5,25 +5,24 @@
 
 /* script_init */ {
     // Subtabs
-    UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Misc");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Visuals");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Anti-Aim");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Rage");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Whitelist");
+    UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Misc");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Debug");
     // Misc
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Watermark");
-    UI.AddColorPicker(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Watermark Color 1");
+    UI.AddColorPicker(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Watermark Color Accent");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "RGB Watermark");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Indicators");
-    UI.AddColorPicker(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Indicator Color");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "RGB Indicators");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Clantag");
-    UI.AddSliderInt(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Clantag Speed", 1, 5);
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Tokyo Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Heartbeat Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "FPS Booster");
     // Visuals
-    UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Tokyo Visuals");
+    UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Indicators");
+    UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box ESP");
+    UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Indicators Color");
+    UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box Color");
     UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"]);
     // Rage
     UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Custom"], 0)
@@ -31,8 +30,8 @@
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Minimum Damage on Key (Found in Misc. Keys)", 0, 100);
     UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "Tokyo Minimum Damage on Key", "Tokyo Min DMG");
     // Anti-Aim
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Slow walk", 1, 100);
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Tokyo AA");
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Slow walk", 1, 100);
     UI.AddDropdown(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Presets", ["Classic", "Classic Alternate", "Low Delta", "Tokyo", "Custom"], 0);
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Fake", -60, 60);
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Real", -60, 60);
@@ -44,6 +43,8 @@
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable Ragebot");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable ESP");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Headshot Only");
+    // Debug
+    UI.AddDropdown(["Misc.", "Tokyo Debug", "Tokyo Debug"], "Doubletap Recharge", ["Off", "Smart", "Fastest"], 0)
 
     // Initialize Console and Chat Output
     var logo_clr = [142, 68, 173, 255];
@@ -167,61 +168,43 @@ var features = {};
         "T齉", "T龒", "T", "T",
         "", "", "", ""
     ];
-    var skel_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Skeleton"]);
-    var box_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Box"]);
-    var world_col = UI.GetColor(["Visuals", "World", "General", "Ambient light"]);
-    var glow_col = UI.GetColor(["Visuals", "ESP", "Enemy", "Glow"]);
-    var dor_col = UI.GetColor(["Visuals", "Extra", "Extra", "Dormant ESP"]);
     var temp_number = 1;
     features.run_visuals = function () {
-        /*Cheat.Print( UI.GetChildren( ["Visuals", "Extra", "SHEET_MGR"] ) + '\n')*/
         var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
-        var rgb_esp_button = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Tokyo Visuals"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-        if(rgb_esp_button){
+        var enemies = Entity.GetEnemies();
+        var grad_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Gradient Box ESP"]);
+        var grad_clr = UI.GetColor(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Gradient Box Color"]);
+        for (var i = 0; i < enemies.length; i++) {
+            var render_box = Entity.GetRenderBox(enemies[i]);
+            if(grad_esp && Entity.IsAlive(enemies[i])){
+                if(render_box[0]){
+                    Render.GradientRect(render_box[1]/*x*/,render_box[2]/*y*/,render_box[3] - render_box[1] + 4/*x1*/,render_box[4] - render_box[2] + 2/*y1*/, 0, [grad_clr[0], grad_clr[1], grad_clr[2], 0], grad_clr);
+                }
+            }
+        }
         if(utils.get_dropdown_value(rgb_esp, 0)){
             UI.SetColor(["Visuals", "ESP", "Enemy", "Box",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            temp_number = 1;
-        } else if(temp_number){
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Box",], box_col);
-            temp_number = 0;
         }
         if(utils.get_dropdown_value(rgb_esp, 1)){
             UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            temp_number = 1;
-        } else if(temp_number){
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Skeleton",], skel_col);
-            temp_number = 0;
         }
         if(utils.get_dropdown_value(rgb_esp, 2)){
             UI.SetColor(["Visuals", "World", "General", "Ambient light",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            temp_number = 1;
-        } else if(temp_number){
-            UI.SetColor(["Visuals", "World", "General", "Ambient light",], world_col);
-            temp_number = 0;
         }
         if(utils.get_dropdown_value(rgb_esp, 3)){
             UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            temp_number = 1;
-        } else if(temp_number){
-            UI.SetColor(["Visuals", "ESP", "Enemy", "Glow",], glow_col);
-            temp_number = 0;
         }
         if(utils.get_dropdown_value(rgb_esp, 4)){
             UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
-            temp_number = 1;
-        } else if(temp_number){
-            UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",], dor_col);
-            temp_number = 0;
         }
-    }
 }
     features.run_clantag = function () {
         var wanted_tag = "";
         if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Heartbeat Clantag"]))
             wanted_tag = !(Math.floor(Globals.Curtime() * 3) % 3) ? "❤" : "♡";
-        else if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Clantag"])) {
-            wanted_tag = tag_list[Math.floor(Globals.Curtime() * UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Clantag Speed"])) % tag_list.length];
+        else if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo Clantag"])) {
+            wanted_tag = tag_list[Math.floor(Globals.Curtime() * 3) % tag_list.length];
         }
 
         // only update clantag when we need to, preventing lag issue with fast clantag changes
@@ -232,33 +215,27 @@ var features = {};
     }
 
     features.run_indicators = function () {
-        if (!UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Indicators"]))
-            return;
-
-        var indicator_clr = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Indicator Color"]);
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-        var text_clr = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Indicators"]) ? [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], indicator_clr[3]] : indicator_clr;
-
+        var indic_enabled = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Indicators"]);
+        var indic_clr = UI.GetColor(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Indicators Color"])
+        var dt_charge = Exploit.GetCharge().toString();
         utils.reset_indicators();
+        if(indic_enabled){
+            Render.Rect(0, 500, 350, 150, indic_clr);
+            Render.Rect(0, 500 + 1, 350 + 1, 150, indic_clr);
+            Render.GradientRect(0, 500 + 1, 350, 150, 1, indic_clr, [0, 0, 0, 0]);
+            Render.String(20 + 1, 510 + 1, 0, "DT Charge", [0, 0, 0, 255], fonts[0]);
+            Render.String(20, 510, 0, "DT Charge", [255, 255, 255, 255], fonts[0]);
+            Render.String(70, 510, 0, dt_charge, [255, 255, 255, 255], fonts[0]);
 
-        if (UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Double tap"]))
-            utils.add_indicator("DT", text_clr, fonts[1]);
 
-        if (UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Hide shots"]))
-            utils.add_indicator("HS", text_clr, fonts[1]);
 
-        if (UI.GetValue(["Rage", "Anti Aim", "Key assignment", "Fake duck"]))
-            utils.add_indicator("FD", text_clr, fonts[1]);
+        }
 
-        if (UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter"))
-            utils.add_indicator("Inverter", text_clr, fonts[1]);
-
-        if (UI.GetValue(["Misc.", "Keys", "Key assignment", "Tokyo Minimum Damage on Key"]))
-            utils.add_indicator("Min DMG Override", text_clr, fonts[1]);
     }
 
     features.run_watermark = function () {
-        var watermark_clr = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Watermark Color 1"]);
+        var watermark_clr = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Watermark Color Accent"]);
         var fps = Math.floor(1 / Globals.Frametime())
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
         var clr = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Watermark"]) ? [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], watermark_clr[3]] : watermark_clr;
@@ -268,8 +245,9 @@ var features = {};
 
         var dpi_scale = utils.get_dpi_scale();
 
-        Render.GradientRect(0, 0, 300 * dpi_scale, 25 * dpi_scale, 1 /* horizontal gradient */, clr, [0, 0, 0, 0]);
+        Render.GradientRect(0, 0, 300 * dpi_scale, 25 * dpi_scale, 1, watermark_clr, [0, 0, 0, 0]);
         Render.FilledRect(0, 0, 300 * dpi_scale, 2 * dpi_scale, clr);
+        
         
         //Render.RoundedRect(0, 20, 200, 100, 5, [255, 255, 255, 255]);
 
@@ -524,7 +502,20 @@ var features = {};
                 Exploit.OverrideTolerance(0);
             } break;
         }
+        
+        switch (UI.GetValue(["Misc.", "Tokyo Debug", "Tokyo Debug", "Doubletap Recharge"])) {
+            case 0: /*Off*/ {
+                
+            } break;
+            case 1: /*Smart*/ {
+                
+            } break;
+            case 2: /*Fastest*/ {
+               
+            } break;
+        }
     }
+
 }
 
 var callbacks = {};
@@ -534,9 +525,10 @@ var callbacks = {};
         // initializing fonts
         var dpi_scale = utils.get_dpi_scale();
         if (!fonts.length) {
-            fonts.push(Render.GetFont("segoeuib.ttf", 11 * dpi_scale, true));
-            fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true));
-            fonts.push(Render.GetFont("segoeuil.ttf", 8 * dpi_scale, true));
+            fonts.push(Render.GetFont("segoeuib.ttf", 12 * dpi_scale, true)); //0
+            fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true)); //1
+            fonts.push(Render.GetFont("segoeuil.ttf", 8 * dpi_scale, true)); //2
+            fonts.push(Render.GetFont("impact.ttf", 25 * dpi_scale, true)); //3
         }
 
         features.run_visuals();
@@ -552,6 +544,7 @@ var callbacks = {};
         features.run_mindmg();
         features.run_doubletap();
         features.run_antiaim();
+        features.run_indicators();
     }
 
     callbacks.player_hurt = function () {
