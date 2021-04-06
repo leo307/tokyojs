@@ -10,13 +10,14 @@
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Anti-Aim");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Rage");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Whitelist");
+    UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Config");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Debug");
     // Misc
     UI.AddSliderInt(["Misc.", "Tokyo Misc", "Tokyo Misc"], "y", 0, 10000);
     UI.AddSliderInt(["Misc.", "Tokyo Misc", "Tokyo Misc"], "x", 0, 10000);
     UI.SetEnabled(["Misc.", "Tokyo Misc", "Tokyo Misc", "y"], 0);
     UI.SetEnabled(["Misc.", "Tokyo Misc", "Tokyo Misc", "x"], 0);
-    UI.AddDropdown(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Tokyo UI Theme", ["Default", "Frost", "Sleek"], 0)
+    UI.AddDropdown(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Tokyo UI Theme", ["Default", "Frost", "Sleek"], 0);
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Watermark");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Flags");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Keybind States");
@@ -25,14 +26,14 @@
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Heartbeat Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "FPS Booster");
     UI.AddColorPicker(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Menu Accent Color");
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Self Promotion");
+    UI.AddTextbox( ["Misc.", "Tokyo Misc", "Tokyo Misc"], "Promotion Text");
     // Visuals
-    //UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Nade Warning");
-    //UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Nade Warning Color");
     UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box ESP");
     UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box Color");
     UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"]);
     // Rage
-    UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Safe", "Custom"], 0)
+    UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Safe", "Custom"], 0);
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Custom Doubletap Shift", 0, 16);
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Minimum Damage on Key (Found in Misc. Keys)", 0, 100);
     UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "Tokyo Minimum Damage on Key", "Tokyo Min DMG");
@@ -45,6 +46,9 @@
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Real", -60, 60);
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Leg Breaker");
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Breaker Delay", 1, 20);
+    //Config
+    UI.AddCheckbox(["Misc.", "Tokyo Config", "Tokyo Config"], "Save JS Settings");
+    UI.AddCheckbox(["Misc.", "Tokyo Config", "Tokyo Config"], "Load JS Settings");
     // Whitelist
     UI.AddDropdown(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Name Selection", ["Select Player"], 0);
     //UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Clantag Stealer");
@@ -73,7 +77,7 @@
  ⢇    ⠁                        ⠘⡄
  ⢸            ⢀⣀⣀⡀        ⢀⣀⣀⡀  ⢣
  ⡸        ⢴⣾⡿⠿⠽⠇        ⠘⠛⠛⠛  ⠈⢄
-⠰⡁              ⢠⠒⠢⡀ '⠒'      ⡠⢄  ⡘
+⠰⡁              ⢠⠒⠢⡀ .⠒.      ⡠⢄  ⡘
  ⠱⣀          ⢀⠜    ⠇        ⢀⠔⠁  ⡏
      ⠑⠤⢄⣀⠔⠁    ⡜        ⠊⠁  ⢀⠜
 */
@@ -725,6 +729,16 @@ var features = {};
         UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18 /* IN_WALK */));
     }
 
+    features.run_selfpromo = function () {
+        var promo_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Self Promotion"]);
+        var promo_text = UI.GetString(["Misc.", "Tokyo Misc", "Tokyo Misc", "Promotion Text"]);
+        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+
+        if(promo_enabled){
+            Render.String(1000, 1000, 1, "" + promo_text, rainbow_clr, fonts[3]);
+        }
+    }
+
     /* Flags Vars */{
     var fx = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "x"]);
     var fy = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "y"]);
@@ -779,12 +793,12 @@ var features = {};
                         Render.StringShadow(fx + 20, fy + 55, 0, "Desync -", [255, 255, 255, 255], fonts[2]); /* Desync */
                         Render.StringShadow(fx + 20, fy + 80, 0, "Choke -", [255, 255, 255, 255], fonts[2]); /* Choke */
                         Render.StringShadow(fx + 20, fy + 105, 0, "Charge -", [255, 255, 255, 255], fonts[2]); /* Charge */
-                        Render.FilledRect(fx + 70, fy + 61, 140, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0), 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14), 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge), 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
+                        Render.FilledRect(fx + 70, fy + 61, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
+                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
+                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
                     } 
                 } break;
                 case 1: /* Frost */ {
@@ -798,11 +812,11 @@ var features = {};
                         Render.String(fx + 20, fy + 80, 0, "Choke -", [36, 36, 36, 255], fonts[2]); /* Choke */
                         Render.String(fx + 20, fy + 105, 0, "Charge -", [36, 36, 36, 255], fonts[2]); /* Charge */
                         Render.FilledRect(fx + 70, fy + 61, 140, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0), 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14), 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge), 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
+                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
+                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
+                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
                     }
                 } break;
                 case 2: /* Sleek */ {
@@ -815,12 +829,12 @@ var features = {};
                         Render.StringShadow(fx + 20, fy + 55, 0, "Desync -", [255, 255, 255, 255], fonts[2]); /* Desync */
                         Render.StringShadow(fx + 20, fy + 80, 0, "Choke -", [255, 255, 255, 255], fonts[2]); /* Choke */
                         Render.StringShadow(fx + 20, fy + 105, 0, "Charge -", [255, 255, 255, 255], fonts[2]); /* Charge */
-                        Render.FilledRect(fx + 70, fy + 61, 140, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0), 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14), 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge), 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
+                        Render.FilledRect(fx + 70, fy + 61, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
+                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
+                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
+                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
                     } 
                 } break;
             }
@@ -1048,6 +1062,20 @@ var features = {};
         }
     }
 }
+    features.run_config = function () {
+        var save = UI.GetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Save JS Settings"]);
+        var load = UI.GetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Load JS Settings"]);
+
+        if(save){
+            UI.SetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Save JS Settings"], 0);
+            DataFile.Save("TOKYO");
+            Cheat.Print("Sucessfully Saved TOKYO.JS Settings!" + "\n");
+        }
+        if(load){
+            UI.SetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Load JS Settings"], 0);
+            DataFile.Load("TOKYO"); 
+        }
+    }
 
 var callbacks = {};
 
@@ -1059,14 +1087,16 @@ var callbacks = {};
             fonts.push(Render.GetFont("segoeuib.ttf", 12 * dpi_scale, true)); //0
             fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true)); //1
             fonts.push(Render.GetFont("segoeui.ttf", 12 * dpi_scale, true)); //2
-            fonts.push(Render.GetFont("impact.ttf", 25 * dpi_scale, true)); //3
+            fonts.push(Render.GetFont("impact.ttf", 30 * dpi_scale, true)); //3
             //fonts.push(Render.GetFont("undefeated.ttf", 15 * dpi_scale, true)); //4d
         }
 
         features.run_visuals();
         features.run_clantag();
         features.run_watermark();
+        features.run_selfpromo();
         features.run_keybinds();
+        features.run_config();
         features.run_fps_booster();
         features.run_flags();
         utils.import_grenade();
