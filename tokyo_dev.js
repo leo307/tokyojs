@@ -1,56 +1,56 @@
-/*
-*   "Tokyo" script for onetap.com
-*   Authors: TheTokyo#001, ses#1997  
-*/
+/*   "Tokyo" script for onetap.com   Authors: Tokyo#4000, ses#1997  */
 
-/* script_init */ {
+/* Script Initialization */ {
     // Subtabs
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Misc");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Visuals");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Anti-Aim");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Rage");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Whitelist");
-    UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Config");
+    UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Locations");
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "Tokyo Debug");
     // Misc
-    UI.AddSliderInt(["Misc.", "Tokyo Misc", "Tokyo Misc"], "y", 0, 10000);
-    UI.AddSliderInt(["Misc.", "Tokyo Misc", "Tokyo Misc"], "x", 0, 10000);
-    UI.SetEnabled(["Misc.", "Tokyo Misc", "Tokyo Misc", "y"], 0);
-    UI.SetEnabled(["Misc.", "Tokyo Misc", "Tokyo Misc", "x"], 0);
-    UI.AddDropdown(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Tokyo UI Theme", ["Default", "Frost", "Sleek"], 0);
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Watermark");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Flags");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Keybind States");
-    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "RGB Menu Accent");
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "[New] Watermark");
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "[New] Hit List");
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "[New] Flags");
+    UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "[New] Keybind States");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Tokyo Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Heartbeat Clantag");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "FPS Booster");
-    UI.AddColorPicker(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Menu Accent Color");
     UI.AddCheckbox(["Misc.", "Tokyo Misc", "Tokyo Misc"], "Self Promotion");
-    UI.AddTextbox( ["Misc.", "Tokyo Misc", "Tokyo Misc"], "Promotion Text");
+    UI.AddTextbox( ["Misc.", "Tokyo Misc", "Tokyo Misc"], "[Self Promotion] Text");
     // Visuals
     UI.AddCheckbox(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box ESP");
-    UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "Gradient Box Color");
-    UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Visuals", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP"]);
+    UI.AddColorPicker(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "[Gradient Box] Color");
+    UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB ESP", ["RGB Box ESP", "RGB Skeleton", "RGB World Lighting", "RGB Glow", "RGB Dormant ESP", "RGB History Chams"]);
+    UI.AddMultiDropdown(["Misc.", "Tokyo Visuals", "Tokyo Visuals"], "RGB Chams", ["History"]);
     // Rage
     UI.AddDropdown(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Doubletap Speed", ["Off", "Instant", "Safe", "Custom"], 0);
     UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Custom Doubletap Shift", 0, 16);
-    UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Minimum Damage on Key (Found in Misc. Keys)", 0, 100);
+    UI.AddSliderInt(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Minimum Damage on Key (Found in Misc. Keys)", 1, 100);
     UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "Tokyo Minimum Damage on Key", "Tokyo Min DMG");
+    UI.AddCheckbox(["Misc.", "Tokyo Rage", "Tokyo Rage"], "Ragebot Logs");
     // Anti-Aim
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Tokyo AA");
     UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Slow walk", 1, 100);
     UI.AddDropdown(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim",],"Anti Bruteforce", ["Off", "On Hit", "On Shot"],0 );
     UI.AddDropdown(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Presets", ["Classic", "Classic Alternate", "Low Delta", "Tokyo", "Custom"], 0);
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Fake", -60, 60);
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Custom Real", -60, 60);
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "[Custom] Fake", -60, 60);
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "[Custom] Real", -60, 60);
     UI.AddCheckbox(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Leg Breaker");
-    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "Breaker Delay", 1, 20);
-    //Config
-    UI.AddCheckbox(["Misc.", "Tokyo Config", "Tokyo Config"], "Save JS Settings");
-    UI.AddCheckbox(["Misc.", "Tokyo Config", "Tokyo Config"], "Load JS Settings");
+    UI.AddSliderInt(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim"], "[Leg Breaker] Delay", 1, 20);
+    //Locations
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Watermark] X Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Watermark] Y Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Keybinds] X Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Keybinds] Y Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Flags] X Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Flags] Y Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Hit List] X Level", 0, 2000);
+    UI.AddSliderInt(["Misc.", "Tokyo Locations", "Tokyo Locations"], "[Hit List] Y Level", 0, 2000);
     // Whitelist
     UI.AddDropdown(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Name Selection", ["Select Player"], 0);
+    UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Name Selection"], 0);
     //UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Clantag Stealer");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable Ragebot");
     UI.AddCheckbox(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist"], "Disable ESP");
@@ -60,12 +60,12 @@
     // Initialize Console and Chat Output
     var logo_clr = [142, 68, 173, 255];
     Cheat.PrintColor(logo_clr, "\n");
-    Cheat.PrintColor(logo_clr, "████████╗░█████╗░██╗░░██╗██╗░░░██╗░█████╗░" + "\n");
-    Cheat.PrintColor(logo_clr, "╚══██╔══╝██╔══██╗██║░██╔╝╚██╗░██╔╝██╔══██╗" + "\n");
-    Cheat.PrintColor(logo_clr, "░░░██║░░░██║░░██║█████═╝░░╚████╔╝░██║░░██║" + "\n");
-    Cheat.PrintColor(logo_clr, "░░░██║░░░██║░░██║██╔═██╗░░░╚██╔╝░░██║░░██║" + "\n");
-    Cheat.PrintColor(logo_clr, "░░░██║░░░╚█████╔╝██║░╚██╗░░░██║░░░╚█████╔╝" + "\n");
-    Cheat.PrintColor(logo_clr, "░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░" + "\n");
+    Cheat.PrintColor(logo_clr, "███╗░░██╗███████╗░█████╗░████████╗░█████╗░██╗░░██╗██╗░░░██╗░█████╗░" + "\n");
+    Cheat.PrintColor(logo_clr, "████╗░██║██╔════╝██╔══██╗╚══██╔══╝██╔══██╗██║░██╔╝╚██╗░██╔╝██╔══██╗" + "\n");
+    Cheat.PrintColor(logo_clr, "██╔██╗██║█████╗░░██║░░██║░░░██║░░░██║░░██║█████═╝░░╚████╔╝░██║░░██║" + "\n");
+    Cheat.PrintColor(logo_clr, "██║╚████║██╔══╝░░██║░░██║░░░██║░░░██║░░██║██╔═██╗░░░╚██╔╝░░██║░░██║" + "\n");
+    Cheat.PrintColor(logo_clr, "██║░╚███║███████╗╚█████╔╝░░░██║░░░╚█████╔╝██║░╚██╗░░░██║░░░╚█████╔╝" + "\n");
+    Cheat.PrintColor(logo_clr, "╚═╝░░╚══╝╚══════╝░╚════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░" + "\n");
     Cheat.PrintChat("Initializing Tokyo for ID: " + Entity.GetSteamID(Entity.GetLocalPlayer()) + ", User: " + Cheat.GetUsername() + "\n");
     
     /* Fluff is da cat, leave him alone, he changes moods.
@@ -75,20 +75,16 @@
  ⡇⢸        ⣀⠗  ⠉⠉⠁  ⠙⠢⠤⡀⢃⢱
  ⡇⠘⣄⢀⠔⠉                    ⠈⠁⠘⡄
  ⢇    ⠁                        ⠘⡄
- ⢸            ⢀⣀⣀⡀        ⢀⣀⣀⡀  ⢣
- ⡸        ⢴⣾⡿⠿⠽⠇        ⠘⠛⠛⠛  ⠈⢄
-⠰⡁              ⢠⠒⠢⡀ .⠒.      ⡠⢄  ⡘
+ ⢸            ⢀⣀⣀          ⣀⣀⡀  ⢣
+ ⡸        ⢴⣾⡿⠿⠽⠇      .  ⠘⠛⠛⠛  ⠈⢄
+⠰⡁              ⢠⠒⠢⡀ '⠒'      ⡠⢄  ⡘
  ⠱⣀          ⢀⠜    ⠇        ⢀⠔⠁  ⡏
      ⠑⠤⢄⣀⠔⠁    ⡜        ⠊⠁  ⢀⠜
-*/
-
-    // set name selection back to first option 
-    UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Name Selection"], 0);
+*/  
 }
-// fonts
-var fonts = [];
 
-/* render */ {
+var fonts = [];
+/* Render */ {
     Render.StringShadow = function (x, y, centered, text, color, font) {
         Render.String(x + 1, y + 1, centered, text, [0, 0, 0, color[3]], font);
         Render.String(x, y, centered, text, color, font);
@@ -119,8 +115,73 @@ var fonts = [];
 }
 
 var utils = {};
-
-/* utils */ {
+/* Utils */ {
+    utils.getHitboxName = function(index)
+{
+    var hitboxName = "";
+    switch (index){
+        case 0:
+            hitboxName = "Head";
+            break;
+        case 1:
+            hitboxName = "Neck";
+            break;
+        case 2:
+            hitboxName = "Pelvis";
+            break;
+        case 3:
+            hitboxName = "Body";
+            break;
+        case 4:
+            hitboxName = "Thorax";
+            break;
+        case 5:
+            hitboxName = "Chest";
+            break;
+        case 6:
+            hitboxName = "Upper chest";
+            break;
+        case 7:
+            hitboxName = "Left thigh";
+            break;
+        case 8:
+            hitboxName = "Right thigh";
+            break;
+        case 9:
+            hitboxName = "Left calf";
+            break;
+        case 10:
+            hitboxName = "Right calf";
+            break;
+        case 11:
+            hitboxName = "Left foot";
+            break;
+        case 12:
+            hitboxName = "Right foot";
+            break;
+        case 13:
+            hitboxName = "Left hand";
+            break;
+        case 14:
+            hitboxName = "Right hand";
+            break;
+        case 15:
+            hitboxName = "Left upper arm";
+            break;
+        case 16:
+            hitboxName = "Left forearm";
+            break;
+        case 17:
+            hitboxName = "Right upper arm";
+            break;
+        case 18:
+            hitboxName = "Right forearm";
+            break;
+        default:
+            hitboxName = "Generic";
+    }
+    return hitboxName;
+}
     utils.clamp = function (x, min, max) {
         return Math.min(Math.max(x, min), max);
     }
@@ -132,14 +193,15 @@ var utils = {};
 
     utils.hsv_to_rgb = function (h, s, v) {
         var r, g, b, i, f, p, q, t;
-
+    
         i = Math.floor(h * 6);
         f = h * 6 - i;
         p = v * (1 - s);
         q = v * (1 - f * s);
         t = v * (1 - (1 - f) * s);
-
-        switch (i % 6) {
+    
+        switch (i % 6)
+        {
             case 0: r = v, g = t, b = p; break;
             case 1: r = q, g = v, b = p; break;
             case 2: r = p, g = v, b = t; break;
@@ -147,9 +209,47 @@ var utils = {};
             case 4: r = t, g = p, b = v; break;
             case 5: r = v, g = p, b = q; break;
         }
-
-        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), 255];
+    
+        return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
     }
+    function HSVtoRGB(h, s, v) {
+        var r, g, b, i, f, p, q, t;
+        if (arguments.length === 1) {
+            s = h.s, v = h.v, h = h.h;
+        }
+        i = Math.floor(h * 6);
+        f = h * 6 - i;
+        p = v * (1 - s);
+        q = v * (1 - f * s);
+        t = v * (1 - (1 - f) * s);
+        switch (i % 6) {
+            case 0:
+                r = v, g = t, b = p;
+                break;
+            case 1:
+                r = q, g = v, b = p;
+                break;
+            case 2:
+                r = p, g = v, b = t;
+                break;
+            case 3:
+                r = p, g = q, b = v;
+                break;
+            case 4:
+                r = t, g = p, b = v;
+                break;
+            case 5:
+                r = v, g = p, b = q;
+                break;
+        }
+        return [
+            Math.round(r * 255),
+            Math.round(g * 255),
+            Math.round(b * 255),
+            255
+        ]
+    }
+    
 
     utils.set_all = function (a, v) {
         var i, n = a.length;
@@ -368,27 +468,6 @@ var utils = {};
             }
         }
         }
-    utils.add_indicator = function (str, clr, font) {
-        var text_size = Render.TextSize(str, font);
-        Render.StringShadow(Render.GetScreenSize()[0] / 2 - text_size[0] / 2, current_indicators_y, 0, str, clr, font);
-        current_indicators_y += text_size[1] + 2 * this.get_dpi_scale();
-    }
-    utils.wat_in_boundaries = function (x1, y1, x2, y2) {
-        cursorpos = Input.GetCursorPosition();
-        if(x1 - 5 < cursorpos[0] && cursorpos[0] < x2 + 5 && y1 - 7 < cursorpos[1] && cursorpos[1] < y2 + 7){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    utils.flags_in_boundaries = function (x1, y1, x2, y2) {
-        cursorpos = Input.GetCursorPosition();
-        if(x1 - 5 < cursorpos[0] && cursorpos[0] < x2 + 5 && y1 - 7 < cursorpos[1] && cursorpos[1] < y2 + 7){
-            return true;
-        } else {
-            return false;
-        }
-    }
     utils.clamp = function (val, min, max){
         if (val < min)
            return min
@@ -405,28 +484,14 @@ utils.render_arc = function (x, y, r1, r2, s, d, col) {
         Render.Line(x + Math.cos(rad) * r1, y + Math.sin(rad) * r1, x + Math.cos(rad) * r2, y + Math.sin(rad) * r2, col);
     }
 }
-utils.import_grenade = function() {
-    var grenades = Entity.GetEntitiesByClassID(9).concat(Entity.GetEntitiesByClassID(113).concat(Entity.GetEntitiesByClassID(100)));
-    for (e in grenades) {
-        pass = false;
-        for (g in positions) {
-            if (positions[g][0] == grenades[e]) {
-                pass = true;
-                continue;
-            }
-        }
-        if (pass)
-            continue;
-        positions.push([grenades[e], Globals.Curtime(), [Entity.GetRenderOrigin(grenades[e])], Globals.Curtime()]);
-    }
-}
     Math.Lerp = function(min, max, progress) {
     return min + (max - min) * progress;
     } 
 }
 
 var features = {};
-/* features */ {
+/* Features */ {
+    /* Global Vars For Features */ {
     var last_clantag = "";
     var tag_list = [
         "T", "T", "T龒", "T毳",
@@ -440,23 +505,316 @@ var features = {};
         "T齉", "T龒", "T", "T",
         "", "", "", ""
     ];
-
     var temp_number = 1;
     var positions = [];
     var trace = [];
     var render = [];
     var local = Entity.GetLocalPlayer();
-    features.run_visuals = function () {
-        var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Visuals"]);
+}
+
+    /* Start of Features */
+    features.run_clantag = function () {
+        var wanted_tag = "";
+
+        if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Heartbeat Clantag"]))
+            wanted_tag = !(Math.floor(Globals.Curtime() * 3) % 3) ? "❤" : "♡";
+        else if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo Clantag"])) {
+            wanted_tag = tag_list[Math.floor(Globals.Curtime() * 3) % tag_list.length];
+        }
+        if (wanted_tag != last_clantag) {
+            Local.SetClanTag(wanted_tag);
+            last_clantag = wanted_tag;
+        }
+    }
+    
+    features.run_watermark = function () {
+        
         var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+		var fps = Math.floor(1 / Globals.Frametime());
+        var dpi_scale = utils.get_dpi_scale();
+        var w_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "[New] Watermark"]);
+        var w_x = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Watermark] X Level"]);
+        var w_y = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Watermark] Y Level"]);
+
+        if(w_enabled){
+            Render.GradientRect(w_x, w_y - 1, 320 * dpi_scale, 2 * dpi_scale, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 255]);
+            Render.StringShadow(w_x + 10, w_y + 3, 0, "Tokyo.js v6 [Debug] | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
+        }
+    }
+    
+    features.run_keybinds = function () {
+        
+        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+        var dpi_scale = utils.get_dpi_scale();
+        var k_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "[New] Keybind States"]);
+        var k_x = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Keybinds] X Level"]);
+        var k_y = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Keybinds] Y Level"]);
+         
+        /* Get Keybinds */
+         var isDt = UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Double tap"]);
+         var sDt = UI.GetHotkeyState(["Rage", "Exploits", "Keys", "Key assignment", "Double tap"]);
+         var isFd = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]);
+         var sFd = UI.GetHotkeyState(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]);
+         var isHideshots = UI.GetValue(["Rage", "Exploits", "Keys", "Key assignment", "Hide shots"]);
+         var sHideshots = UI.GetHotkeyState(["Rage", "Exploits", "Keys", "Key assignment", "Hide shots"]);
+         var isSw = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]);
+         var sSw = UI.GetHotkeyState(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]);
+         var isAP = UI.GetValue(["Misc.", "Keys", "General", "Key assignment", "Auto peek"]);
+         var sAP = UI.GetHotkeyState(["Misc.", "Keys", "General", "Key assignment", "Auto peek"]);
+         var isFB = UI.GetValue(["Rage", "General", "Key assignment", "Force body aim"]);
+         var sFB = UI.GetHotkeyState(["Rage", "General", "Key assignment", "Force body aim"]);
+         var isFS = UI.GetValue(["Rage", "General", "Key assignment", "Force safe point"]);
+         var sFS = UI.GetHotkeyState(["Rage", "General", "Key assignment", "Force safe point"]);
+         var istDMG = UI.GetValue(["Misc.", "Keys", "Key assignment", "Tokyo Minimum Damage on Key"]);
+         var tDMG = UI.GetHotkeyState(["Misc.", "Keys", "Key assignment", "Tokyo Minimum Damage on Key"]);
+         var alt_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]);
+         var invert = UI.GetHotkeyState(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]);
+        
+         if(k_enabled){
+    
+         number = 0;
+   
+         Render.GradientRect(k_x, k_y + 20, 150, 2, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 255]);
+         Render.StringShadow(k_x + 20, k_y - 5, 0, "[Tokyo] Keybinds", [255, 255, 255, 255], fonts[1]);
+   
+   
+         if(isDt == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21, 0, "Doubletap", [255, 255, 255, 255], fonts[2]);
+   
+             number += 1;
+   
+             if(sDt == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sDt == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sDt == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+         }
+   
+         if(isHideshots == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Hide Shots", [255, 255, 255, 255], fonts[2]);
+   
+             if(sHideshots == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sHideshots == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sHideshots == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+   
+         if(isAP == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Auto Peek", [255, 255, 255, 255], fonts[2]);
+   
+             if(sAP == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sAP == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sAP == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+   
+         if(isSw == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Slow Walk", [255, 255, 255, 255], fonts[2]);
+   
+             if(sSw == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sSw == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sSw == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+   
+         if(isFd == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Fake Duck", [255, 255, 255, 255], fonts[2]);
+   
+             if(sFd == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFd == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFd == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+   
+         if(isFB == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Force Baim", [255, 255, 255, 255], fonts[2]);
+             if(sFB == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFB == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFB == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+   
+         if(isFS == 1) {
+             Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Force Safe", [255, 255, 255, 255], fonts[2]);
+             if(sFS == "Always") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFS == "Toggle") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+             }
+             if(sFS == "Hold") {
+                 Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+             }
+             number += 1;
+         }
+         if(istDMG == 1) {
+            Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Min DMG", [255, 255, 255, 255], fonts[2]);
+  
+            if(tDMG == "Always") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+            }
+            if(tDMG == "Toggle") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+            }
+            if(tDMG == "Hold") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+            }
+            number += 1;
+        }
+         if(alt_invert == 1){
+            Render.StringShadow(k_x + 15, k_y + 21 + number * 17, 0, "Inverter", [255, 255, 255, 255], fonts[2]);
+  
+            if(invert == "Always") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[always]", [255, 255, 255, 255], fonts[2]);
+            }
+            if(invert == "Toggle") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[toggled]", [255, 255, 255, 255], fonts[2]);
+            }
+            if(invert == "Hold") {
+                Render.StringShadow(k_x + 85, k_y + 21 + number * 17, 0, "[holding]", [255, 255, 255, 255], fonts[2]);
+            }
+            number += 1;
+         }
+    }
+
+    }
+    
+    features.run_flags = function () {
+        
+        /* UI Keybinds & Extra */
+        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+        var desync_max = 60;
+        var desync = utils.clamp(Math.abs(Local.GetRealYaw() - Local.GetFakeYaw()), 0, desync_max);
+        var choke = Globals.ChokedCommands();
+        var last_choke = Globals.ChokedCommands();
+        var charge = Exploit.GetCharge();
+        var dpi_scale = utils.get_dpi_scale();
+        var f_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "[New] Flags"]);
+        var f_x = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Flags] X Level"]);
+        var f_y = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Flags] Y Level"]);
+
+        if(f_enabled){
+            Render.FilledRect(f_x, f_y, 250 * dpi_scale, 150 * dpi_scale, [255, 255, 255, 0]);
+            Render.StringShadow(f_x + 90, f_y + 3, 0, "[Tokyo] Flags", [255, 255, 255, 255], fonts[1]);
+            Render.GradientRect(f_x, f_y + 30, 250 * dpi_scale, 2 * dpi_scale, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 255]);
+            Render.GradientRect(f_x + 70, f_y + 102, Math.Lerp(0, 140, charge) * dpi_scale, 4, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 225]);
+            Render.GradientRect(f_x + 70, f_y + 53, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 4, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 225]);
+            Render.GradientRect(f_x + 70, f_y + 78, Math.Lerp(0, 140, choke / 14) * dpi_scale, 4, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 225]);
+            Render.String(f_x + 20, f_y + 45, 0, "Desync -", [255, 255, 255, 255], fonts[2]);
+            Render.String(f_x + 20, f_y + 70, 0, "Choke -", [255, 255, 255, 255], fonts[2]);
+            Render.String(f_x + 20, f_y + 95, 0, "Charge -", [255, 255, 255, 255], fonts[2]);
+        }
+    }
+
+    features.run_hitlist = function () {
+
+        var list_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "[New] Hit List"]);
+        var el_x = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Hit List] X Level"]);
+        var el_y = UI.GetValue(["Misc.", "Tokyo Locations", "Tokyo Locations", "[Hit List] Y Level"]);
+        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+        
+        /* Ragebot Information */
+        ragebot_target = Event.GetInt("target_index");
+        ragebot_target_hitbox = Event.GetInt("hitbox");
+        ragebot_target_hitchance = Event.GetInt("hitchance");
+        ragebot_target_safepoint = Event.GetInt("safepoint");
+        ragebot_target_exploit = Event.GetInt("exploit");
+        targetName = Entity.GetName(ragebot_target);
+
+        
+        
+        
+        //Cheat.PrintChat("[Tokyo.js] \x03 Enemy: \x01" + targetName + "\x04 Hitbox: \x01" + utils.getHitboxName(ragebot_target_hitbox) + "\x05 HC: \x01" + ragebot_target_hitchance + "\x06 Safepoint: \x01" + ragebot_target_safepoint + "\x07 Exploit: \x01" + ragebot_target_exploit + " \n");
+        //^^ Testing if it's Draw that is fucking shit up.
+        
+        
+        //if(list_enabled){
+            /* Setup */
+            //Render.FilledRect(el_x, el_y, 250, 150, [255, 255, 255, 0]);
+            //Render.GradientRect(el_x, el_y + 20, 250, 2, 1, [rainbow_clr.r, rainbow_clr.g, rainbow_clr.b, 255], [rainbow_clr.b, rainbow_clr.r, rainbow_clr.g, 255]);
+            //Render.StringShadow(el_x + 80, el_y - 5, 0, "[Tokyo] Hitlist", [255, 255, 255, 255], fonts[1]);
+            /* Beginning of Hitlist */
+            //Render.StringShadow(el_x + 15, el_y + 30, 0, "test" + targetname, [255, 255, 255, 255], fonts[2]);
+            //Render.StringShadow(el_x + 15, el_y + 50, 0, "Sample Name | ", [255, 255, 255, 255], fonts[2]);
+            //Render.StringShadow(el_x + 15, el_y + 70, 0, "Sample Name | ", [255, 255, 255, 255], fonts[2]);
+            //Render.StringShadow(el_x + 15, el_y + 90, 0, "Sample Name | ", [255, 255, 255, 255], fonts[2]);
+            //Render.StringShadow(el_x + 15, el_y + 110, 0, "Sample Name | ", [255, 255, 255, 255], fonts[2]);
+        //}
+    }
+
+    features.run_slowwalk = function () {
+        
+        var movement = UserCMD.GetMovement();
+        var local = Entity.GetLocalPlayer();
+        var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
+        var weapon_info = Entity.GetCCSWeaponInfo(local);
+        var scoped = Entity.GetProp(local, "CCSPlayer", "m_bIsScoped");
+        var target_speed = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) * 0.34;
+        var movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
+
+        if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+            return;
+        if (movement_scale <= 1.1)
+            return;
+
+        // scale our movements by the target velocity
+        movement[0] = (movement[0] / movement_scale) * target_speed;
+        movement[1] = (movement[1] / movement_scale) * target_speed;
+
+        UserCMD.SetMovement(movement);
+
+        // remove walk flag
+        UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18 /* IN_WALK */));
+    }
+
+    features.run_visuals = function () {
+        
+        var rgb_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB ESP"]);
+        var rgb_chams = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "RGB Chams"]);
+        var rainbow_clr = HSVtoRGB(Globals.Realtime() / 3 % 1, 1, 1);
         var enemies = Entity.GetEnemies();
         var grad_esp = UI.GetValue(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Gradient Box ESP"]);
-        var grad_clr = UI.GetColor(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "Gradient Box Color"]);
+        var grad_clr = UI.GetColor(["Misc.", "Tokyo Visuals", "Tokyo Visuals", "[Gradient Box] Color"]);
+        
         for (var i = 0; i < enemies.length; i++) {
             var render_box = Entity.GetRenderBox(enemies[i]);
             if(grad_esp && Entity.IsAlive(enemies[i])){
                 if(render_box[0]){
-                    Render.GradientRect(render_box[1]/*x*/,render_box[2]/*y*/,render_box[3] - render_box[1] + 4/*x1*/,render_box[4] - render_box[2] + 2/*y1*/, 0, [grad_clr[0], grad_clr[1], grad_clr[2], 0], grad_clr);
+                    Render.GradientRect(render_box[1]/*x*/,render_box[2]/*y*/,render_box[3] - render_box[1]/*x1*/,render_box[4] - render_box[2]/*y1*/, 0, [grad_clr[0], grad_clr[1], grad_clr[2], 0], grad_clr);
                 }
             }
         }
@@ -475,373 +833,27 @@ var features = {};
         if(utils.get_dropdown_value(rgb_esp, 4)){
             UI.SetColor(["Visuals", "Extra", "Extra", "Dormant ESP",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
         }
-    }
-    features.run_clantag = function () {
-        var wanted_tag = "";
-        if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Heartbeat Clantag"]))
-            wanted_tag = !(Math.floor(Globals.Curtime() * 3) % 3) ? "❤" : "♡";
-        else if (UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo Clantag"])) {
-            wanted_tag = tag_list[Math.floor(Globals.Curtime() * 3) % tag_list.length];
+        if(utils.get_dropdown_value(rgb_chams, 0)){
+            UI.SetColor(["Visuals", "Chams", "Enemy", "History material color",],[rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]]);
         }
 
-        // only update clantag when we need to, preventing lag issue with fast clantag changes
-        if (wanted_tag != last_clantag) {
-            Local.SetClanTag(wanted_tag);
-            last_clantag = wanted_tag;
-        }
-    }
-    var wx = 0;
-	var wy = 0;
-	var difference = [0,0]
-    features.run_watermark = function () {
-       /* UI */
-        var theme = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo UI Theme"]);
-        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-		var fps = Math.floor(1 / Globals.Frametime());
-        var accent_color = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Menu Accent Color"]);
-        var rgb_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Menu Accent"]);
-        var dpi_scale = utils.get_dpi_scale();
-    
-        /*Logic & Other Vars */
-        // Enabled Check
-        if (!UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Watermark"]))
-            return;
-        //Drag Logic
-        //var wx
-		//var wy
-		var wx2 = wx + 307 // Width
-		var wy2 = wy + 35 // Height
-        var cursor_pos = Input.GetCursorPosition()
-		// var difference = [cursorpos[0]
-        if (UI.IsMenuOpen() && Input.IsKeyPressed(0x01) && utils.wat_in_boundaries(wx, wy, wx2, wy2)) {
-            wx = cursor_pos[0] - difference[0]
-            wy = cursor_pos[1] - difference[1]
-            if (wx+307 > Render.GetScreenSize()[0])
-                wx = Render.GetScreenSize()[0]-307
-            if (wx < 0)
-                wx = 0
-            if (wy + 35 > Render.GetScreenSize()[1])
-                wy = Render.GetScreenSize()[1]-35
-            if (wy < 0)
-                wy = 0
-         } else {
-           difference[0] = cursor_pos[0] - wx;
-           difference[1] = cursor_pos[1] - wy;
-         }
-
-        /* Theme Dropdown */
-        switch (theme) {
-            case 0: /* Default */ {
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [2, 15, 27, 255], accent_color);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [2, 15, 27, 255]);
-                Render.StringShadow(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", accent_color, fonts[0]);
-                if(rgb_enabled){
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [2, 15, 27, 255], rainbow_clr);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [2, 15, 27, 255]);
-                Render.StringShadow(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", rainbow_clr, fonts[0]);
-                }
-            } break;
-            case 1: /* Frost */ {
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [253, 255, 237, 255], accent_color);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [253, 255, 237, 255]);
-                Render.String(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [36, 36, 36, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", accent_color, fonts[0]);
-                if(rgb_enabled){
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [253, 255, 237, 255], rainbow_clr);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [253, 255, 237, 255]);
-                Render.String(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [36, 36, 36, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", rainbow_clr, fonts[0]);
-                }
-            } break;
-            case 2: /* Sleek */ {
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [36, 36, 36, 255], accent_color);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [36, 36, 36, 255]);
-                Render.StringShadow(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", accent_color, fonts[0]);
-                if(rgb_enabled){
-                Render.GradientRect(wx, wy, 320 * dpi_scale, 35 * dpi_scale, 1, [36, 36, 36, 255], rainbow_clr);
-                Render.FilledRect(wx + 2, wy + 2, 320 - 4 * dpi_scale, 35 - 4 * dpi_scale, [36, 36, 36, 255]);
-                Render.StringShadow(wx + 11, wy + 8, 0, "Tokyo.js v5                  | " + "onetap" + " | " + Cheat.GetUsername() + " | " + Globals.Tickrate().toString() + " | " + fps, [255, 255, 255, 255], fonts[0]);
-                Render.StringShadow(wx + 59, wy + 8, 0, "      [Debug]", rainbow_clr, fonts[0]);
-                }
-            } break;
-        }
+        
 
 
-    
-    }
-    
-    /* Keybind Vars */{
-    var kx = 0
-    var ky = 0
-    var kdifference = [0, 0]
-    }
-    features.run_keybinds = function () {
-        var theme = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo UI Theme"]);
-        var accent_color = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Menu Accent Color"]);
-        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-        var rgb_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Menu Accent"]);
-        var keybind_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Keybind States"]);
-        var kx2 = kx + 252
-        var ky2 = ky + 177
-        var dpi_scale = utils.get_dpi_scale();
-        var cursor_pos = Input.GetCursorPosition();
-
-        switch (theme) {
-            case 0: /* Default */ {
-                if(keybind_enabled){
-                    if (UI.IsMenuOpen() && Input.IsKeyPressed(0x01) && utils.flags_in_boundaries(kx, ky, kx2, ky2)) {
-                        kx = cursor_pos[0] - kdifference[0]
-                        ky = cursor_pos[1] - kdifference[1]
-                    if (kx+252 > Render.GetScreenSize()[0])
-                        kx = Render.GetScreenSize()[0]-252
-                    if (kx < 0)
-                        kx = 0
-                    if (ky + 177 > Render.GetScreenSize()[1])
-                        ky = Render.GetScreenSize()[1]-177
-                    if (ky < 0)
-                        ky = 0
-                    } else {
-                        kdifference[0] = cursor_pos[0] - kx;
-                        kdifference[1] = cursor_pos[1] - ky;
-                    }
-                    Render.GradientRect(kx, ky, 250 + 2 * dpi_scale, 175 + 2 * dpi_scale, 1, [2, 15, 27, 255], rgb_enabled ? rainbow_clr : accent_color);
-                    Render.FilledRect(kx + 2, ky + 2, 250 - 2 * dpi_scale, 175 - 2 * dpi_scale, [2, 15, 27, 255]);
-                    Render.StringShadow(kx + 100, ky + 10, 0, "Keybinds", [255, 255, 255, 255], fonts[1]);
-                    Render.Line(kx + 40, ky + 40, kx + 210, ky + 40, [112, 112, 112, 100]);
-                    Render.StringShadow(kx + 17, ky + 50, 0, "Fake Duck -", [255, 255, 255, 255], fonts[0]); /* Fake Duck */
-                    Render.StringShadow(kx + 17, ky + 70, 0, "Inverter -", [255, 255, 255, 255], fonts[0]); /* Inverter */
-                    Render.StringShadow(kx + 17, ky + 90, 0, "Hide Shots -", [255, 255, 255, 255], fonts[0]); /* HS */
-                    Render.StringShadow(kx + 17, ky + 110, 0, "Doubletap -", [255, 255, 255, 255], fonts[0]); /* DT */
-                    Render.StringShadow(kx + 17, ky + 130, 0, "Safepoint -", [255, 255, 255, 255], fonts[0]); /* Safepoint */
-                    Render.StringShadow(kx + 17, ky + 150, 0, "Tokyo Min DMG -", [255, 255, 255, 255], fonts[0]); /* Tokyo Min DMG */
-                    Render.StringShadow(kx + 90, ky + 50, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 78, ky + 70, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 90, ky + 90, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 87, ky + 110, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 85, ky + 130, 0, UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? "On" : "Off", !UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 120, ky + 150, 0, UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? "On" : "Off", !UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                }
-            } break;
-            case 1: /* Frost */ {
-                if(keybind_enabled){
-                    if (UI.IsMenuOpen() && Input.IsKeyPressed(0x01) && utils.flags_in_boundaries(kx, ky, kx2, ky2)) {
-                        kx = cursor_pos[0] - kdifference[0]
-                        ky = cursor_pos[1] - kdifference[1]
-                    if (kx+252 > Render.GetScreenSize()[0])
-                        kx = Render.GetScreenSize()[0]-252
-                    if (kx < 0)
-                        kx = 0
-                    if (ky + 177 > Render.GetScreenSize()[1])
-                        ky = Render.GetScreenSize()[1]-177
-                    if (ky < 0)
-                        ky = 0
-                    } else {
-                        kdifference[0] = cursor_pos[0] - kx;
-                        kdifference[1] = cursor_pos[1] - ky;
-                    }
-                    Render.GradientRect(kx, ky, 250 + 2 * dpi_scale, 175 + 2 * dpi_scale, 1, [253, 255, 237, 255], rgb_enabled ? rainbow_clr : accent_color);
-                    Render.FilledRect(kx + 2, ky + 2, 250 - 2 * dpi_scale, 175 - 2 * dpi_scale, [253, 255, 237, 255]);
-                    Render.String(kx + 100, ky + 10, 0, "Keybinds", [36, 36, 36, 255], fonts[1]);
-                    Render.Line(kx + 40, ky + 40, kx + 210, ky + 40, [112, 112, 112, 100]);
-                    Render.String(kx + 17, ky + 50, 0, "Fake Duck -", [36, 36, 36, 255], fonts[0]); /* Fake Duck */
-                    Render.String(kx + 17, ky + 70, 0, "Inverter -", [36, 36, 36, 255], fonts[0]); /* Inverter */
-                    Render.String(kx + 17, ky + 90, 0, "Hide Shots -", [36, 36, 36, 255], fonts[0]); /* HS */
-                    Render.String(kx + 17, ky + 110, 0, "Doubletap -", [36, 36, 36, 255], fonts[0]); /* DT */
-                    Render.String(kx + 17, ky + 130, 0, "Safepoint -", [36, 36, 36, 255], fonts[0]); /* Safepoint */
-                    Render.String(kx + 17, ky + 150, 0, "Tokyo Min DMG -", [36, 36, 36, 255], fonts[0]); /* Tokyo Min DMG */
-                    Render.String(kx + 90, ky + 50, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.String(kx + 78, ky + 70, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.String(kx + 90, ky + 90, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.String(kx + 87, ky + 110, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.String(kx + 85, ky + 130, 0, UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? "On" : "Off", !UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.String(kx + 120, ky + 150, 0, UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? "On" : "Off", !UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                }
-            } break;
-            case 2: /* Sleek */ {
-                if(keybind_enabled){
-                    if (UI.IsMenuOpen() && Input.IsKeyPressed(0x01) && utils.flags_in_boundaries(kx, ky, kx2, ky2)) {
-                        kx = cursor_pos[0] - kdifference[0]
-                        ky = cursor_pos[1] - kdifference[1]
-                    if (kx+252 > Render.GetScreenSize()[0])
-                        kx = Render.GetScreenSize()[0]-252
-                    if (kx < 0)
-                        kx = 0
-                    if (ky + 177 > Render.GetScreenSize()[1])
-                        ky = Render.GetScreenSize()[1]-177
-                    if (ky < 0)
-                        ky = 0
-                    } else {
-                        kdifference[0] = cursor_pos[0] - kx;
-                        kdifference[1] = cursor_pos[1] - ky;
-                    }
-                    Render.GradientRect(kx, ky, 250 + 2 * dpi_scale, 175 + 2 * dpi_scale, 1, [36, 36, 36, 255], rgb_enabled ? rainbow_clr : accent_color);
-                    Render.FilledRect(kx + 2, ky + 2, 250 - 2 * dpi_scale, 175 - 2 * dpi_scale, [36, 36, 36, 255]);
-                    Render.StringShadow(kx + 100, ky + 10, 0, "Keybinds", [255, 255, 255, 255], fonts[1]);
-                    Render.Line(kx + 40, ky + 40, kx + 210, ky + 40, [112, 112, 112, 100]);
-                    Render.StringShadow(kx + 17, ky + 50, 0, "Fake Duck -", [255, 255, 255, 255], fonts[0]); /* Fake Duck */
-                    Render.StringShadow(kx + 17, ky + 70, 0, "Inverter -", [255, 255, 255, 255], fonts[0]); /* Inverter */
-                    Render.StringShadow(kx + 17, ky + 90, 0, "Hide Shots -", [255, 255, 255, 255], fonts[0]); /* HS */
-                    Render.StringShadow(kx + 17, ky + 110, 0, "Doubletap -", [255, 255, 255, 255], fonts[0]); /* DT */
-                    Render.StringShadow(kx + 17, ky + 130, 0, "Safepoint -", [255, 255, 255, 255], fonts[0]); /* Safepoint */
-                    Render.StringShadow(kx + 17, ky + 150, 0, "Tokyo Min DMG -", [255, 255, 255, 255], fonts[0]); /* Tokyo Min DMG */
-                    Render.StringShadow(kx + 90, ky + 50, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Fake duck"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 78, ky + 70, 0, UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? "On" : "Off", !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 90, ky + 90, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Hide shots"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 87, ky + 110, 0, UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? "On" : "Off", !UI.GetValue(["Rage", "Exploits", "Keys", "Double tap"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 85, ky + 130, 0, UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? "On" : "Off", !UI.GetValue(["Rage", "General", "General", "Key assignment", "Force safe point"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                    Render.StringShadow(kx + 120, ky + 150, 0, UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? "On" : "Off", !UI.GetValue(["Misc.", "Keys", "Key assignment","Tokyo Minimum Damage on Key"]) ? [255, 0, 0, 255] : rgb_enabled ? rainbow_clr : accent_color, fonts[0]);
-                }
-            } break;
-        }
-    }
-
-    features.run_slowwalk = function () {
-        var movement = UserCMD.GetMovement();
-        var local = Entity.GetLocalPlayer();
-        var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
-
-        if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
-            return;
-
-        var weapon_info = Entity.GetCCSWeaponInfo(local);
-        var scoped = Entity.GetProp(local, "CCSPlayer", "m_bIsScoped");
-        var target_speed = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Slow walk"]) / 100.0) * 0.34;
-
-        AntiAim.SetOverride(1);
-        AntiAim.SetRealOffset(enable_invert ? 19 : -19);
-        AntiAim.SetFakeOffset(enable_invert ? -2 : 2);
-
-        var movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
-
-        if (movement_scale <= 1.1)
-            return;
-
-        // scale our movements by the target velocity
-        movement[0] = (movement[0] / movement_scale) * target_speed;
-        movement[1] = (movement[1] / movement_scale) * target_speed;
-
-        UserCMD.SetMovement(movement);
-
-        // remove walk flag
-        UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18 /* IN_WALK */));
     }
 
     features.run_selfpromo = function () {
+        
         var promo_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Self Promotion"]);
-        var promo_text = UI.GetString(["Misc.", "Tokyo Misc", "Tokyo Misc", "Promotion Text"]);
-        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
+        var promo_text = UI.GetString(["Misc.", "Tokyo Misc", "Tokyo Misc", "[Self Promotion] Text"]);
+        var rainbow_clr = HSVtoRGB(Globals.Realtime() / 3 % 1, 1, 1);
 
         if(promo_enabled){
             Render.String(1000, 1000, 1, "" + promo_text, rainbow_clr, fonts[3]);
         }
     }
 
-    /* Flags Vars */{
-    var fx = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "x"]);
-    var fy = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "y"]);
-    UI.SetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "y"], fy);
-    UI.SetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "x"], fx);
-    var fdifference = [0, 0]
-    var choke_max = 0;
-    var last_choke = 0;
-}
-    features.run_flags = function () {
-        var theme = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Tokyo UI Theme"]);
-        var flag_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "Flags"]);
-        var accent_color = UI.GetColor(["Misc.", "Tokyo Misc", "Tokyo Misc", "Menu Accent Color"]);
-        var rgb_enabled = UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "RGB Menu Accent"]);
-        var rainbow_clr = utils.hsv_to_rgb(Globals.Realtime() / 3 % 1, 1, 1);
-        var desync_max = 60;
-        var desync = utils.clamp(Math.abs(Local.GetRealYaw() - Local.GetFakeYaw()), 0, desync_max);
-        var choke = Globals.ChokedCommands();
-        if (!Globals.ChokedCommands() && last_choke)
-        choke_max = last_choke;
-        last_choke = Globals.ChokedCommands();
-        var charge = Exploit.GetCharge();
-        var fx2 = fx + 250 // Width
-        var fy2 = fy + 150 // Height
-        var cursor_pos = Input.GetCursorPosition();
-        var dpi_scale = utils.get_dpi_scale();
-
-        if (UI.IsMenuOpen() && Input.IsKeyPressed(0x01) && utils.flags_in_boundaries(fx, fy, fx2, fy2)) {
-            fx = cursor_pos[0] - fdifference[0]
-            fy = cursor_pos[1] - fdifference[1]
-            if (fx+250 > Render.GetScreenSize()[0])
-                fx = Render.GetScreenSize()[0]-250
-            if (fx < 0)
-                fx = 0
-            if (fy + 150 > Render.GetScreenSize()[1])
-                fy = Render.GetScreenSize()[1]-150
-            if (fy < 0)
-                fy = 0
-         } else {
-           fdifference[0] = cursor_pos[0] - fx;
-           fdifference[1] = cursor_pos[1] - fy;
-         }
-         /* Theme */
-            switch (theme) {
-                case 0: /* Default */ {
-                    if(flag_enabled){
-                        // fx = 50, fy = 500
-                        Render.GradientRect(fx, fy, 250 * dpi_scale, 150 * dpi_scale, 1, [2, 15, 27, 255], rgb_enabled ? rainbow_clr : accent_color);
-                        Render.FilledRect(fx + 2, fy + 2, 250 - 4 * dpi_scale, 150 - 4 * dpi_scale, [2, 15, 27, 255]);
-                        Render.Line(fx + 40, fy + 40, fx + 210, fy + 40, [112, 112, 112, 100]);
-                        Render.StringShadow(fx + 110, fy + 10, 0, "Flags", [255, 255, 255, 255], fonts[1]);
-                        Render.StringShadow(fx + 20, fy + 55, 0, "Desync -", [255, 255, 255, 255], fonts[2]); /* Desync */
-                        Render.StringShadow(fx + 20, fy + 80, 0, "Choke -", [255, 255, 255, 255], fonts[2]); /* Choke */
-                        Render.StringShadow(fx + 20, fy + 105, 0, "Charge -", [255, 255, 255, 255], fonts[2]); /* Charge */
-                        Render.FilledRect(fx + 70, fy + 61, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
-                    } 
-                } break;
-                case 1: /* Frost */ {
-                    if(flag_enabled){
-                        // fx = 50, fy = 500
-                        Render.GradientRect(fx, fy, 250 * dpi_scale, 150 * dpi_scale, 1, [253, 255, 237, 255], rgb_enabled ? rainbow_clr : accent_color);
-                        Render.FilledRect(fx + 2, fy + 2, 250 - 4 * dpi_scale, 150 - 4 * dpi_scale, [253, 255, 237, 255]);
-                        Render.Line(fx + 40, fy + 40, fx + 210, fy + 40, [112, 112, 112, 100]);
-                        Render.String(fx + 110, fy + 10, 0, "Flags", [36, 36, 36, 255], fonts[1]);
-                        Render.String(fx + 20, fy + 55, 0, "Desync -", [36, 36, 36, 255], fonts[2]); /* Desync */
-                        Render.String(fx + 20, fy + 80, 0, "Choke -", [36, 36, 36, 255], fonts[2]); /* Choke */
-                        Render.String(fx + 20, fy + 105, 0, "Charge -", [36, 36, 36, 255], fonts[2]); /* Charge */
-                        Render.FilledRect(fx + 70, fy + 61, 140, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
-                    }
-                } break;
-                case 2: /* Sleek */ {
-                    if(flag_enabled){
-                        // fx = 50, fy = 500
-                        Render.GradientRect(fx, fy, 250 * dpi_scale, 150 * dpi_scale, 1, [36, 36, 36, 255], rgb_enabled ? rainbow_clr : accent_color);
-                        Render.FilledRect(fx + 2, fy + 2, 250 - 4 * dpi_scale, 150 - 4 * dpi_scale, [36, 36, 36, 255]);
-                        Render.Line(fx + 40, fy + 40, fx + 210, fy + 40, [112, 112, 112, 100]);
-                        Render.StringShadow(fx + 110, fy + 10, 0, "Flags", [255, 255, 255, 255], fonts[1]);
-                        Render.StringShadow(fx + 20, fy + 55, 0, "Desync -", [255, 255, 255, 255], fonts[2]); /* Desync */
-                        Render.StringShadow(fx + 20, fy + 80, 0, "Choke -", [255, 255, 255, 255], fonts[2]); /* Choke */
-                        Render.StringShadow(fx + 20, fy + 105, 0, "Charge -", [255, 255, 255, 255], fonts[2]); /* Charge */
-                        Render.FilledRect(fx + 70, fy + 61, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Desync Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 61, Math.Lerp(0, 140, desync / 60.0) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Desync */
-                        Render.FilledRect(fx + 70, fy + 86, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Choke Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 86, Math.Lerp(0, 140, choke_max / 14) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Choke */
-                        Render.FilledRect(fx + 70, fy + 111, 140 * dpi_scale, 6, [50, 50, 50, 100]); /* Charge Fill in Bar */
-                        Render.FilledRect(fx + 70, fy + 111, Math.Lerp(0, 140, charge) * dpi_scale, 6, rgb_enabled ? rainbow_clr : accent_color); /* Charge */
-                    } 
-                } break;
-            }
-    }
-
-    // Whitelist Function
-    // sesame 
+    // Sesame Whitelist 
     var plist_values = {
         last_ragebot_disabled: 0,
         ragebot_disabled: new Array(65),
@@ -849,18 +861,15 @@ var features = {};
         esp_disabled: new Array(65),
         last_headshot_enabled: 0,
         headshot_enabled: new Array(65),
-    };
-
-    // initialize list 
+    }
+    // Initialize list 
     utils.set_all(plist_values.ragebot_disabled, 0);
     utils.set_all(plist_values.esp_disabled, 0);
     utils.set_all(plist_values.headshot_enabled, 0);
-
-    // for later 
+    // For the Future 
     var player_to_steal_tag = 0;
     var player_to_steal_name = 0;
     var last_whitelist_name = "Select Player";
-
     features.reset_whitelist = function (idx) {
         if (!idx || idx > 64)
             return;
@@ -968,8 +977,10 @@ var features = {};
     }
 
     features.run_mindmg = function () {
+        
         var enemies = Entity.GetEnemies();
         var min_dmg = UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Minimum Damage on Key (Found in Misc. Keys)"]);
+        
         if (!UI.GetValue(["Misc.", "Keys", "Key assignment", "Tokyo Minimum Damage on Key"]))
             return;
         enemies.forEach(function (enemy) {
@@ -983,17 +994,17 @@ var features = {};
         Convar.SetInt("mat_queue_mode", UI.GetValue(["Misc.", "Tokyo Misc", "Tokyo Misc", "FPS Booster"]) ? 2 : -1);
     }
 
-    var old_breaker_tick_count = 0;
-
     features.run_antiaim = function () {
+        
         var aa_enabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Tokyo AA"]);
         var presets = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Presets"]);
-        var fake_slider =UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Custom Fake"]);
-        var real_slider = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Custom Real"]);
+        var fake_slider =UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "[Custom] Fake"]);
+        var real_slider = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "[Custom] Real"]);
         var breakerEnabled = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Leg Breaker"]);
         var enable_invert = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
-        var breakerDelay = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "Breaker Delay"])
+        var breakerDelay = UI.GetValue(["Misc.", "Tokyo Anti-Aim", "Tokyo Anti-Aim", "[Leg Breaker] Delay"])
         var localPlayer = Entity.GetLocalPlayer();
+        var old_breaker_tick_count = 0;
 
         if(aa_enabled){
             AntiAim.SetOverride(1);
@@ -1040,8 +1051,10 @@ var features = {};
         lastBreaker = breakerEnabled
 
     }
+
     features.run_doubletap = function () {
         var dt_shift = UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Custom Doubletap Shift"]);
+
         switch (UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Doubletap Speed"])) {
             case 0: /*Off*/ {
                 Exploit.OverrideTolerance(2);
@@ -1061,45 +1074,46 @@ var features = {};
             } break;
         }
     }
-}
-    features.run_config = function () {
-        var save = UI.GetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Save JS Settings"]);
-        var load = UI.GetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Load JS Settings"]);
 
-        if(save){
-            UI.SetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Save JS Settings"], 0);
-            DataFile.Save("TOKYO");
-            Cheat.Print("Sucessfully Saved TOKYO.JS Settings!" + "\n");
-        }
-        if(load){
-            UI.SetValue(["Misc.", "Tokyo Config", "Tokyo Config", "Load JS Settings"], 0);
-            DataFile.Load("TOKYO"); 
+    features.run_logs = function () {
+        
+        var logs_enabled = UI.GetValue(["Misc.", "Tokyo Rage", "Tokyo Rage", "Ragebot Logs"]);
+        var spread_misses = Local.GetSpread();
+        var innacuracy_misses = Local.GetInaccuracy();
+        ragebot_target = Event.GetInt("target_index");
+        ragebot_target_hitbox = Event.GetInt("hitbox");
+        ragebot_target_hitchance = Event.GetInt("hitchance");
+        ragebot_target_safepoint = Event.GetInt("safepoint");
+        ragebot_target_exploit = Event.GetInt("exploit");
+        targetName = Entity.GetName(ragebot_target);
+
+        if(logs_enabled){
+            Cheat.PrintChat("[Tokyo.js] \x03 Enemy: \x01" + targetName + "\x04 Hitbox: \x01" + utils.getHitboxName(ragebot_target_hitbox) + "\x05 HC: \x01" + ragebot_target_hitchance + "\x06 Safepoint: \x01" + ragebot_target_safepoint + "\x07 Exploit: \x01" + ragebot_target_exploit + " \n");
         }
     }
+}
 
 var callbacks = {};
-
-/* callbacks */ {
+/* Callbacks */ {
     callbacks.draw = function () {
-        // initializing fonts
+        // Initializing Fonts
         var dpi_scale = utils.get_dpi_scale();
         if (!fonts.length) {
             fonts.push(Render.GetFont("segoeuib.ttf", 12 * dpi_scale, true)); //0
             fonts.push(Render.GetFont("segoeuib.ttf", 13 * dpi_scale, true)); //1
             fonts.push(Render.GetFont("segoeui.ttf", 12 * dpi_scale, true)); //2
             fonts.push(Render.GetFont("impact.ttf", 30 * dpi_scale, true)); //3
-            //fonts.push(Render.GetFont("undefeated.ttf", 15 * dpi_scale, true)); //4d
+            //fonts.push(Render.GetFont("undefeated_1.ttf", 13 * dpi_scale, false)); //4
+            //fonts.push(Render.GetFont("undefeated_1.ttf", 20 * dpi_scale, false)); //5
         }
-
         features.run_visuals();
         features.run_clantag();
         features.run_watermark();
         features.run_selfpromo();
         features.run_keybinds();
-        features.run_config();
         features.run_fps_booster();
         features.run_flags();
-        utils.import_grenade();
+        //features.run_hitlist(); Gives Error When Trying to Draw Inside a Function That Uses ragebot_fire event.
     }
 
     callbacks.create_move = function () {
@@ -1115,7 +1129,8 @@ var callbacks = {};
     }
 
     callbacks.ragebot_fire = function () {
-
+        features.run_logs();
+        features.run_hitlist();
     }
 
     callbacks.player_connect_full = function () {
@@ -1160,6 +1175,11 @@ var callbacks = {};
             // clear player list for that entity
             features.reset_whitelist(idx);
         }
+
+    }
+
+    callbacks.round_end = function () {
+        features.run_hitlist();    
     }
 
     callbacks.unload = function () {
@@ -1167,18 +1187,19 @@ var callbacks = {};
     }
 }
 
-/* register_cb */ {
-    // hook callbacks
+/* Register Callback */ {
+    // Hook callbacks
     Cheat.RegisterCallback("Unload", "callbacks.unload");
     Cheat.RegisterCallback("Draw", "callbacks.draw");
     Cheat.RegisterCallback("CreateMove", "callbacks.create_move");
 
-    // game events
+    // Game events
     Cheat.RegisterCallback("ragebot_fire", "callbacks.ragebot_fire");
     Cheat.RegisterCallback("player_hurt", "callbacks.player_hurt");
     Cheat.RegisterCallback("player_hurt", "OnHurt");
     Cheat.RegisterCallback("bullet_impact", "OnBulletImpact");
-    // for player list
+    // Connections
     Cheat.RegisterCallback("player_connect_full", "callbacks.player_connect_full");
     Cheat.RegisterCallback("cs_game_disconnected", "callbacks.cs_game_disconnected");
+    Cheat.RegisterCallback("round_end", "callbacks.round_end");
 }
