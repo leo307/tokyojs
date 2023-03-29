@@ -67,20 +67,7 @@
     Cheat.PrintColor(logo_clr, "██║░╚███║███████╗╚█████╔╝░░░██║░░░╚█████╔╝██║░╚██╗░░░██║░░░╚█████╔╝" + "\n");
     Cheat.PrintColor(logo_clr, "╚═╝░░╚══╝╚══════╝░╚════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░" + "\n");
     Cheat.PrintChat("Initializing Tokyo for ID: " + Entity.GetSteamID(Entity.GetLocalPlayer()) + ", User: " + Cheat.GetUsername() + "\n");
-    
-    /* Fluff is da cat, leave him alone, he changes moods.
-    ⢀⠤⡀
- ⢠⠊⣉⠒⠤⢀⡀          ⡐⢁⠴⢜⢄
- ⡎⢸  ⠉⠐⠢⢌⠑⢄    ⡸  ⡆    ⠣⠱⡀
- ⡇⢸        ⣀⠗  ⠉⠉⠁  ⠙⠢⠤⡀⢃⢱
- ⡇⠘⣄⢀⠔⠉                    ⠈⠁⠘⡄
- ⢇    ⠁                        ⠘⡄
- ⢸            ⢀⣀⣀          ⣀⣀⡀  ⢣
- ⡸        ⢴⣾⡿⠿⠽⠇      .  ⠘⠛⠛⠛  ⠈⢄
-⠰⡁              ⢠⠒⠢⡀ '⠒'      ⡠⢄  ⡘
- ⠱⣀          ⢀⠜    ⠇        ⢀⠔⠁  ⡏
-     ⠑⠤⢄⣀⠔⠁    ⡜        ⠊⠁  ⢀⠜
-*/  
+
 }
 
 var fonts = [];
