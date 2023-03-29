@@ -64,18 +64,7 @@
     Cheat.PrintColor(logo_clr, "░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░" + "\n");
     Cheat.PrintChat("Initializing Tokyo for ID: " + Entity.GetSteamID(Entity.GetLocalPlayer()) + ", User: " + Cheat.GetUsername() + "\n");
     /*
-    ⢀⠤⡀
- ⢠⠊⣉⠒⠤⢀⡀          ⡐⢁⠴⢜⢄
- ⡎⢸  ⠉⠐⠢⢌⠑⢄    ⡸  ⡆    ⠣⠱⡀
- ⡇⢸        ⣀⠗  ⠉⠉⠁  ⠙⠢⠤⡀⢃⢱
- ⡇⠘⣄⢀⠔⠉                    ⠈⠁⠘⡄
- ⢇    ⠁                        ⠘⡄
- ⢸            ⢀⣀⣀⡀        ⢀⣀⣀⡀  ⢣
- ⡸        ⢴⣾⡿⠿⠽⠇        ⠘⠛⠛⠛  ⠈⢄
-⠰⡁              ⢠⠒⠢⡀.⠒.      ⡠⢄  ⡘
- ⠱⣀          ⢀⠜    ⠇        ⢀⠔⠁  ⡏
-     ⠑⠤⢄⣀⠔⠁    ⡜        ⠊⠁  ⢀⠜
-*/
+
 
     // set name selection back to first option 
     UI.SetValue(["Misc.", "Tokyo Whitelist", "Tokyo Whitelist", "Name Selection"], 0);
